@@ -8,7 +8,6 @@ export class ShyftApiService {
     private readonly _httpClient = inject(HttpClient);
     private readonly _header = { 'x-api-key': 'EraF45wUGdcVjhRP' };
     private readonly _mint = 'EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v';
-    private readonly _mint1 = '7EYnhQoR9YM3N7UoaKRoA44Uy8JeaZV3qyouov87awMs';
 
     getAccount(publicKey: string | undefined | null) {
         if (!publicKey) {
@@ -20,6 +19,31 @@ export class ShyftApiService {
         url.searchParams.set('network', 'mainnet-beta');
         url.searchParams.set('wallet', publicKey);
         url.searchParams.set('token', this._mint);
+
+        return this._httpClient
+            .get<{
+                result: { balance: number; info: { image: string } };
+            }>(url.toString(),  { headers: this._header})
+            .pipe(map((response) => response.result));
+    }
+}
+
+@Injectable({ providedIn: 'root' })
+export class TokenSilly {
+    private readonly _httpClient = inject(HttpClient);
+    private readonly _header = { 'x-api-key': 'EraF45wUGdcVjhRP' };
+    private readonly _mint1 = '7EYnhQoR9YM3N7UoaKRoA44Uy8JeaZV3qyouov87awMs';
+
+    getAccount2(publicKey2: string | undefined | null) {
+        if (!publicKey2) {
+            return of(null);
+        }
+
+        const url = new URL('https://api.shyft.to/sol/v1/wallet/token_balance');
+
+        url.searchParams.set('network', 'mainnet-beta');
+        url.searchParams.set('wallet', publicKey2);
+        url.searchParams.set('token', this._mint1);
 
         return this._httpClient
             .get<{
