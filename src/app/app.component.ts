@@ -1,11 +1,8 @@
-import { Component, inject } from '@angular/core';
-import { toSignal } from '@angular/core/rxjs-interop';
+import { Component } from '@angular/core';
 import { MatAnchor } from '@angular/material/button';
 import { RouterModule } from '@angular/router';
-import { WalletStore } from '@heavy-duty/wallet-adapter';
 import { HdWalletMultiButtonComponent} from '@heavy-duty/wallet-adapter-material';
-import { computedAsync } from 'ngxtension/computed-async';
-import { ShyftApiService } from './shyft-api.services';
+
 
 @Component({
   standalone: true,
@@ -19,13 +16,7 @@ import { ShyftApiService } from './shyft-api.services';
       <hd-wallet-multi-button></hd-wallet-multi-button>
       </div>
 
-      @if (account()) {
-        <div 
-          class="absolute top-4 left-4 flex justify-center items-center gap-2">
-          <img [src]="account()?.info?.image" class="w-8 h-8" />
-          <p class="text-xl">{{ account()?.balance }}</p>
-        </div>
-      }
+      
 
       <nav>
         <ul class="flex justify-center items-center gap-4">
@@ -44,13 +35,4 @@ import { ShyftApiService } from './shyft-api.services';
     </main>
   `,
 })
-export class AppComponent {
-  private readonly _shyftApiService = inject(ShyftApiService);
-  private readonly _walletStore = inject(WalletStore);
-  private readonly _publicKey = toSignal(this._walletStore.publicKey$);
-
-  readonly account = computedAsync(
-    () => this._shyftApiService.getAccount(this._publicKey()?.toBase58()),
-    { requireSync: true },
-  );
-}
+export class AppComponent {}
