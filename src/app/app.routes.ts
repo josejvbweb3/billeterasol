@@ -4,12 +4,12 @@ export const appRoutes: Route[] = [
     {
         path: '',
         loadComponent: () => 
-            import('./tokens-page.component').then((m) => m.TokensPageComponent),
+            import('./balance-page.component').then((m) => m.BalancePageComponent),
     },
     {
-        path: 'activity',
+        path: 'settings',
         loadComponent: () => 
-            import('./activity-page.component').then((m) => m.ActivityPageComponent),
+            import('./settings-page.component').then((m) => m.SettingsPageComponent),
     },
     {
         path: '**',

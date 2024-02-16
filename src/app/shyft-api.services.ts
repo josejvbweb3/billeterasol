@@ -76,3 +76,29 @@ export class BalanceSol {
             .pipe(map((response) => response.result));
     }
 }
+@Injectable({ providedIn: 'root' })
+export class ActivityWallet {
+    private readonly _httpClient = inject(HttpClient);
+    private readonly _header = { 'x-api-key': 'EraF45wUGdcVjhRP' };
+
+    getAccount3(publicKey3: string | undefined | null) {
+        if (!publicKey3) {
+            return of(null);
+        }
+
+        const url = new URL('https://api.shyft.to/sol/v1/transaction/history');
+
+        url.searchParams.set('network', 'mainnet-beta');
+        url.searchParams.set('tx_num', '1');
+        url.searchParams.set('account3', publicKey3);
+        url.searchParams.set('enable_raw', 'false');
+        
+
+
+        return this._httpClient
+            .get<{
+                result: { timestamp: string; type: string;  }
+            }>(url.toString(),  { headers: this._header})
+            .pipe(map((response) => response.result));
+    }
+}

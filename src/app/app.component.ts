@@ -21,10 +21,10 @@ import { HdWalletMultiButtonComponent} from '@heavy-duty/wallet-adapter-material
       <nav>
         <ul class="flex justify-center items-center gap-4">
           <li>
-            <a [routerLink]="['']" mat-raised-button>Tokens</a>
+            <a [routerLink]="['']" mat-raised-button>Balance</a>
           </li>
           <li>
-            <a [routerLink]="['activity']" mat-raised-button>Activity</a>
+            <a [routerLink]="['settings']" mat-raised-button>Settings</a>
           </li>
         </ul>
       </nav>
