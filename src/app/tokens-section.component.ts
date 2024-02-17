@@ -2,7 +2,7 @@ import { Component, inject } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { WalletStore } from '@heavy-duty/wallet-adapter';
 import { computedAsync } from 'ngxtension/computed-async';
-import { ShyftApiService, BalanceSol, TokenSilly } from './shyft-api.services';
+import { ShyftApiService, TokenUsdc, SolBalance } from './shyft-api.services';
 
 
 @Component({
@@ -45,25 +45,25 @@ export class TokensSectionComponent {
     private readonly _shyftApiService = inject(ShyftApiService);
     private readonly _walletStore = inject(WalletStore);
     private readonly _publicKey = toSignal(this._walletStore.publicKey$);
-    private readonly _balanceSol = inject(BalanceSol);
+    private readonly _solBalance = inject(SolBalance);
     private readonly _walletStore1 = inject(WalletStore);
     private readonly _publicKey1 = toSignal(this._walletStore1.publicKey$);
-    private readonly _tokenSilly = inject(TokenSilly);
+    private readonly _tokenUsdc = inject(TokenUsdc);
     private readonly _walletStore2 = inject(WalletStore);
     private readonly _publicKey2 = toSignal(this._walletStore2.publicKey$);
 
   
     readonly account = computedAsync(
       () => this._shyftApiService.getAccount(this._publicKey()?.toBase58()),
-      { requireSync: false },
+      { requireSync: false, initialValue: null},
     );
     readonly account1 = computedAsync(
-        () => this._balanceSol.getAccount1(this._publicKey1()?.toBase58()),
-        { requireSync: false },
+        () => this._solBalance.getAccount2(this._publicKey1()?.toBase58()),
+        { requireSync: false, initialValue: null},
     );
     readonly account2 = computedAsync(
-        () => this._tokenSilly.getAccount2(this._publicKey2()?.toBase58()),
-        { requireSync: false },
+        () => this._tokenUsdc.getAccount1(this._publicKey2()?.toBase58()),
+        { requireSync: false, initialValue: null},
       );
 
 

@@ -7,9 +7,10 @@ import { TransactionsSectionComponent } from './transactions-section.component';
     template: `
         <billeterasol-tokens-section></billeterasol-tokens-section>
         <billeterasol-transactions-section></billeterasol-transactions-section>
+        
         `,
     standalone: true,
-    imports: [TokensSectionComponent, TransactionsSectionComponent]
+    imports: [ TokensSectionComponent, TransactionsSectionComponent]
 })
 
 export class BalancePageComponent {}
