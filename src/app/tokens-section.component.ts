@@ -8,7 +8,7 @@ import { ShyftApiService, TokenUsdc, SolBalance } from './shyft-api.services';
 @Component({
     selector: 'billeterasol-tokens-section',
     template: `
-        <section class="px-24 py-32 bg-white bg-opacity-5">
+        <section class="px-4 py-8 bg-white bg-opacity-5">
             <p class="text-center text-3xl">Balance</p>
         
        <section>
@@ -36,6 +36,7 @@ import { ShyftApiService, TokenUsdc, SolBalance } from './shyft-api.services';
         </div>
 
       }
+      
       
     `,
     standalone: true

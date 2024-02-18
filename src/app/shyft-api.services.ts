@@ -77,21 +77,21 @@ export class SolBalance {
 export class ActivityWallet {
   private readonly _httpClient= inject(HttpClient);
   private readonly _header= { 'x-api-key': 'EraF45wUGdcVjhRP' };
-  getTransactionsHistory(publicKey3: string | undefined | null) {
+  getTransactionsHistory(publicKey: string | undefined | null) {
 
-    if (!publicKey3) {
+    if (!publicKey) {
       return of(null);
     }
     
     const url = new URL('https://api.shyft.to/sol/v1/transaction/history');
 
     url.searchParams.set('network', 'mainnet-beta');
-    url.searchParams.set('account', publicKey3);
-    url.searchParams.set('tx_num', '2');
+    url.searchParams.set('account', publicKey);
+    url.searchParams.set('tx_num', '10');
     
 
     return this._httpClient.get<{
-      result: { type: string, timestamp: string };
+      result: { type: string; status: string; timestamp: string; }[]
     }>(url.toString(), { headers: this._header })
     .pipe(map((response) => response.result));
   }
