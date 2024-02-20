@@ -27,7 +27,7 @@ export interface TransferFormPayload {
                 name="memo"
                 matInput
                 type="text" 
-                placeholder="Ingress amount"
+                placeholder="example: pay electricity bill"
                 [(ngModel)]="model.memo"
                 required
                 #memoControl="ngModel"
@@ -52,7 +52,7 @@ export interface TransferFormPayload {
                 matInput
                 type="number" 
                 min="0"
-                placeholder="example: pay electricity bill"
+                placeholder="Amount"
                 [(ngModel)]="model.amount"
                 required
                 #amountControl="ngModel"

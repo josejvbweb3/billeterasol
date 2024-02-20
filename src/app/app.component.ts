@@ -1,9 +1,10 @@
-import { Component, inject } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { MatAnchor } from '@angular/material/button';
-import { MatDialog } from '@angular/material/dialog';
 import { RouterModule } from '@angular/router';
 import { HdWalletMultiButtonComponent} from '@heavy-duty/wallet-adapter-material';
-import { TransferModalComponent } from './transfer-modal.component';
+import { ActivityWallet } from './shyft-api.services';
+import { ConnectionStore } from '@heavy-duty/wallet-adapter';
+
 
 
 
@@ -29,9 +30,6 @@ import { TransferModalComponent } from './transfer-modal.component';
             <a [routerLink]="['']" mat-raised-button>Balance</a>
           </li>
           <li>
-            <a [routerLink]="['']" mat-raised-button (click)="onTransfer">Transfer</a>
-          </li>
-          <li>
             <a [routerLink]="['settings']" mat-raised-button>Settings</a>
           </li>
         </ul>
@@ -43,14 +41,13 @@ import { TransferModalComponent } from './transfer-modal.component';
     </main>
   `,
 })
-export class AppComponent {
-  
-  private readonly _matDialog = inject(MatDialog);
-
-  onTransfer() {
-
-    this._matDialog.open(TransferModalComponent);
+export class AppComponent implements OnInit{
+  private readonly _activityWallet = inject(ActivityWallet);
+  private readonly _connectionStore = inject(ConnectionStore);
+  ngOnInit() {
+    this._connectionStore.setEndpoint(this._activityWallet.getEndpoint());
   }
 }
+
 
 

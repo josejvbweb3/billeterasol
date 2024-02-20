@@ -26,6 +26,7 @@ export class ShyftApiService {
     .pipe(map((response) => response.result));
   }
 }
+
 @Injectable({ providedIn: 'root' })
 export class TokenUsdc {
   private readonly _httpClient= inject(HttpClient);
@@ -94,5 +95,12 @@ export class ActivityWallet {
       result: { type: string; status: string; timestamp: string; }[]
     }>(url.toString(), { headers: this._header })
     .pipe(map((response) => response.result));
+  }
+
+  getEndpoint() {
+    const url = new URL('https://rpc.shyft.to');
+    url.searchParams.set('api_key', 'EraF45wUGdcVjhRP');
+
+    return url.toString();
   }
 }
