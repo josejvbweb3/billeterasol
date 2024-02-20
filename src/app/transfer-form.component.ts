@@ -116,11 +116,16 @@ export class TransferFormComponent {
     @Output() readonly submitForm = new EventEmitter<TransferFormPayload>()
     
     onSubmitForm(form: NgForm) {
-        if (form.invalid  || this.model.amount === null || this.model.memo ===  null || this.model.receiverAddress === null ) {
+        if (
+            form.invalid  || 
+            this.model.amount === null || 
+            this.model.memo ===  null || 
+            this.model.receiverAddress === null 
+            ) {
             console.error('el formulario es invalido.');
         } else {
             this.submitForm.emit({
-                amount: this.model.amount,
+                amount: this.model.amount * 10 ** 9,
                 memo: this.model.memo,
                 receiverAddress: this.model.receiverAddress
             })

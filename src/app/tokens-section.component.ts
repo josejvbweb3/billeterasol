@@ -39,13 +39,17 @@ import { MatButton } from '@angular/material/button';
       }
       
       <footer class="flex justify-center">
-        <button mat-raised-button color="primary" (click)="onTransfer()">Transfer funds</button>
+        <button mat-raised-button color="primary" (click)="onTransfer()">Transfer</button>
+        
       </footer>
     `,
     standalone: true
 })
 
 export class TokensSectionComponent {
+onCancel() {
+throw new Error('Method not implemented.');
+}
     private readonly _matDialog = inject(MatDialog);
     private readonly _shyftApiService = inject(ShyftApiService);
     private readonly _walletStore = inject(WalletStore);

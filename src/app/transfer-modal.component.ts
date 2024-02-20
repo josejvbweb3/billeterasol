@@ -1,7 +1,10 @@
-import { Component } from "@angular/core";
+import { Component, computed, inject } from "@angular/core";
 import { TransferFormComponent, TransferFormPayload } from './transfer-form.component';
 import { injectTransactionSender } from "@heavy-duty/wallet-adapter";
 import { createTransferInstructions } from '@heavy-duty/spl-utils';
+import { MatDialogRef } from "@angular/material/dialog";
+import { MatSnackBar } from "@angular/material/snack-bar";
+import { MatProgressSpinner} from "@angular/material/progress-spinner"
 
 @Component ({
     selector: 'billeterasol-transfer-modal',
@@ -12,13 +15,23 @@ import { createTransferInstructions } from '@heavy-duty/spl-utils';
             <billeterasol-transfer-form (submitForm)="onTransfer($event)"></billeterasol-transfer-form>
         </div>`,
     standalone: true,
-    imports: [TransferFormComponent],
+    imports: [TransferFormComponent, MatProgressSpinner ],
 })
 export class TransferModalComponent {
+    private readonly _matDialogRef = inject(MatDialogRef);
+    private readonly _matSnackBar = inject(MatSnackBar);
     private readonly _transactionSender = injectTransactionSender();
 
+    readonly transactionStatus = computed(() => this._transactionSender().status);
+    readonly isRunning = computed(
+        () =>
+            this.transactionStatus() === 'sending' ||
+            this.transactionStatus() === 'confirming' ||
+            this.transactionStatus() === 'finalizing',
+    );
+
     onTransfer(payload: TransferFormPayload) {
-        console.log('hola mundo', payload);
+        this._matDialogRef.disableClose = true;
 
         
         this._transactionSender
