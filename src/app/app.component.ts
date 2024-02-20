@@ -1,13 +1,18 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { MatAnchor } from '@angular/material/button';
+import { MatDialog } from '@angular/material/dialog';
 import { RouterModule } from '@angular/router';
 import { HdWalletMultiButtonComponent} from '@heavy-duty/wallet-adapter-material';
+import { TransferModalComponent } from './transfer-modal.component';
+
+
 
 
 @Component({
-  standalone: true,
   imports: [RouterModule, HdWalletMultiButtonComponent, MatAnchor ],
   selector: 'billeterasol-root',
+  standalone: true,
+
   template: `
     <header class="py-8">
       <h1 class="text-5xl text-center mb-4">Wallet</h1>
@@ -24,6 +29,9 @@ import { HdWalletMultiButtonComponent} from '@heavy-duty/wallet-adapter-material
             <a [routerLink]="['']" mat-raised-button>Balance</a>
           </li>
           <li>
+            <a [routerLink]="['']" mat-raised-button (click)="onTransfer">Transfer</a>
+          </li>
+          <li>
             <a [routerLink]="['settings']" mat-raised-button>Settings</a>
           </li>
         </ul>
@@ -35,4 +43,14 @@ import { HdWalletMultiButtonComponent} from '@heavy-duty/wallet-adapter-material
     </main>
   `,
 })
-export class AppComponent {}
+export class AppComponent {
+  
+  private readonly _matDialog = inject(MatDialog);
+
+  onTransfer() {
+
+    this._matDialog.open(TransferModalComponent);
+  }
+}
+
+
