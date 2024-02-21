@@ -34,14 +34,17 @@ import { MatButton } from '@angular/material/button';
         <div 
           class=" flex justify-center items-center gap-2 mb-6">
           <img [src]="account2()?.info?.image" class="w-8 h-8" />
-          <p class="text-xl">{{ account2()?.balance }} SILLY</p>
-        </div>
-      }
-      
-      <footer class="flex justify-center">
-        <button mat-raised-button color="primary" (click)="onTransfer()">Transfer</button>
+          <p class="text-xl">{{ account2()?.balance }} SILLY </p>
+          </div>
+          
+          <footer class="flex justify-center ">
+            <button mat-raised-button color="primary" (click)="onTransfer()">Transfer</button>
+          </footer>
         
-      </footer>
+
+      }
+     
+      
     `,
     standalone: true
 })
@@ -60,6 +63,8 @@ throw new Error('Method not implemented.');
     private readonly _tokenUsdc = inject(TokenUsdc);
     private readonly _walletStore2 = inject(WalletStore);
     private readonly _publicKey2 = toSignal(this._walletStore2.publicKey$);
+ 
+
 
   
     readonly account = computedAsync(
@@ -74,6 +79,7 @@ throw new Error('Method not implemented.');
         () => this._tokenUsdc.getAccount1(this._publicKey2()?.toBase58()),
         { requireSync: false, initialValue: null},
       );
+   
 
     onTransfer() {
       this._matDialog.open(TransferModalComponent);

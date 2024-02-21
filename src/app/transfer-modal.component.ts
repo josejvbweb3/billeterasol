@@ -42,7 +42,7 @@ export class TransferModalComponent {
                     receiverAddress: payload.receiverAddress,
                     senderAddress: publicKey.toBase58(),
                     fundReceiver: true,
-                    memo: payload.memo
+                    memo: payload.memo,
             }) )
             .subscribe({
                 next: (signature) => console.log(`Firma: ${signature}`),

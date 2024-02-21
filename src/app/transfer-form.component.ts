@@ -22,7 +22,7 @@ export interface TransferFormPayload {
     template: `
         <form #form1="ngForm" class="w-[400px]" (ngSubmit)="onSubmitForm(form1)">
             <mat-form-field appearance="fill" class="w-full mb-4">
-            <mat-label>Concept</mat-label>
+            <mat-label>Memo</mat-label>
             <input
                 name="memo"
                 matInput
@@ -32,7 +32,7 @@ export interface TransferFormPayload {
                 required
                 #memoControl="ngModel"
             />
-            <mat-icon matSuffix>attach_money</mat-icon>
+            <mat-icon matSuffix>description</mat-icon>
 
             @if (form1.submitted && memoControl.errors) {
                 <mat-error>
@@ -57,7 +57,7 @@ export interface TransferFormPayload {
                 required
                 #amountControl="ngModel"
             />
-            <mat-icon matSuffix>description</mat-icon>
+            <mat-icon matSuffix>attach_money</mat-icon>
 
             @if (form1.submitted && amountControl.errors) {
                 <mat-error>

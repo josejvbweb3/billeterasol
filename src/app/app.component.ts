@@ -44,6 +44,7 @@ import { ConnectionStore } from '@heavy-duty/wallet-adapter';
 export class AppComponent implements OnInit{
   private readonly _activityWallet = inject(ActivityWallet);
   private readonly _connectionStore = inject(ConnectionStore);
+  
   ngOnInit() {
     this._connectionStore.setEndpoint(this._activityWallet.getEndpoint());
   }
