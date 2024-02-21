@@ -10,7 +10,7 @@ import { MatProgressSpinner} from "@angular/material/progress-spinner"
     selector: 'billeterasol-transfer-modal',
     template: `
         <div class="px-8 pt-16 pb-8">
-            <h2 class="text-3xl text-center mb-8">Transfer funds</h2>
+            <h2 class="text-3xl text-center mb-8">Transfer tokens</h2>
 
             <billeterasol-transfer-form (submitForm)="onTransfer($event)"></billeterasol-transfer-form>
         </div>`,

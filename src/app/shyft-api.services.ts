@@ -109,7 +109,7 @@ export class ActivityWallet {
   }
 }
 
-  Injectable({ providedIn: 'root' })
+@Injectable({ providedIn: 'root' })
   export class TokensList {
   private readonly _httpClient= inject(HttpClient);
   private readonly _key = '2Uxl_qOb31_gMXfy'
@@ -127,7 +127,7 @@ export class ActivityWallet {
     url.searchParams.set('wallet', publicKey);
     
     return this._httpClient.get<{
-      result: { balance: number; info: { name: string, symbol: string, image: string } }[]
+      result: { balance: number; info: { name: string, symbol: string, image: string }; }[]
     }>(url.toString(), { headers: this._header })
     .pipe(map((response) => response.result));
   }
