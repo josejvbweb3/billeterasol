@@ -1,24 +1,24 @@
-import { Component, EventEmitter, Output, inject } from "@angular/core";
+import { Component, EventEmitter, Output } from "@angular/core";
 import { FormsModule, NgForm } from "@angular/forms";
 import { MatFormFieldModule } from "@angular/material/form-field";
 import { MatInput} from '@angular/material/input';
 import { MatIcon } from '@angular/material/icon';
 import { MatButton } from "@angular/material/button";
-import { toSignal } from "@angular/core/rxjs-interop";
-import { computedAsync } from "ngxtension/computed-async";
-import { TokensList } from "./shyft-api.services";
-import { WalletStore } from "@heavy-duty/wallet-adapter";
+//import { toSignal } from "@angular/core/rxjs-interop";
+//import { computedAsync } from "ngxtension/computed-async";
+//import { TokensList } from "./shyft-api.services";
+//import { WalletStore } from "@heavy-duty/wallet-adapter";
 
 
 export interface TransferFormModel {
-    token: string | null;
+    //token: string | null;
     memo: string | null;
     amount: number | null;
     receiverAddress: string | null;
 }
 
 export interface TransferFormPayload {
-    token: string;
+    //token: string;
     memo: string;
     amount: number;
     receiverAddress: string;
@@ -28,7 +28,7 @@ export interface TransferFormPayload {
     selector: 'billeterasol-transfer-form',
     template: `
         <form #form1="ngForm" class="w-[400px]" (ngSubmit)="onSubmitForm(form1)">
-            <mat-form-field appearance="fill" class="w-full mb-4">
+            <!-- <mat-form-field appearance="fill" class="w-full mb-4">
             <mat-label>Token</mat-label>
             <mat-select [(ngModel)]="tokenControl" name="token" #tokenControl="ngModel"></mat-select>
             
@@ -43,7 +43,7 @@ export interface TransferFormPayload {
             }
 
             <mat-hint>Reason for transfer</mat-hint>
-            </mat-form-field>
+            </mat-form-field> -->
         
             <mat-form-field appearance="fill" class="w-full mb-4">
             <mat-label>Memo</mat-label>
@@ -131,21 +131,21 @@ export interface TransferFormPayload {
 })
 
 export class TransferFormComponent {
-    private readonly _tokensList = inject(TokensList);
-    private readonly _walletStore = inject(WalletStore);
-    private readonly _publicKey = toSignal(this._walletStore.publicKey$);
+    // private readonly _tokensList = inject(TokensList);
+    // private readonly _walletStore = inject(WalletStore);
+    // private readonly _publicKey = toSignal(this._walletStore.publicKey$);
     
     
-    readonly allTokens = computedAsync(
-        () => this._tokensList.getAllTokens(this._publicKey()?.toBase58()),
+    // readonly allTokens = computedAsync(
+    //     () => this._tokensList.getAllTokens(this._publicKey()?.toBase58()),
     
-    );
+    // );
 
     
     
     
     readonly model: TransferFormModel = {
-        token: null,
+        //token: null,
         memo: null,
         amount: null,
         receiverAddress: null
@@ -156,7 +156,7 @@ export class TransferFormComponent {
     onSubmitForm(form: NgForm) {
         if (
             form.invalid  || 
-            this.model.token === null ||
+            //this.model.token === null ||
             this.model.amount === null || 
             this.model.memo ===  null || 
             this.model.receiverAddress === null 
@@ -164,7 +164,7 @@ export class TransferFormComponent {
             console.error('el formulario es invalido.');
         } else {
             this.submitForm.emit({
-                token: this.model.token,
+                //token: this.model.token,
                 amount: this.model.amount * 10 ** 9,
                 memo: this.model.memo,
                 receiverAddress: this.model.receiverAddress
