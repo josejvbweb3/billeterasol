@@ -31,7 +31,7 @@ export interface TransferFormPayload {
             <mat-form-field appearance="fill" class="w-full mb-4">
             <mat-label>Token</mat-label>
             <mat-select [(ngModel)]="tokenControl" name="token" #tokenControl="ngModel"></mat-select>
-            />
+            
             <mat-icon matSuffix>token</mat-icon>
 
             @if (form1.submitted && tokenControl.errors) {
