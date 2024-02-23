@@ -111,11 +111,11 @@ export class ActivityWallet {
 
 @Injectable({ providedIn: 'root' })
   export class TokensList {
-  private readonly _httpClient= inject(HttpClient);
-  private readonly _key = '2Uxl_qOb31_gMXfy'
-  private readonly _header= { 'x-api-key': this._key };
+    private readonly _httpClient= inject(HttpClient);
+    private readonly _key = '2Uxl_qOb31_gMXfy'
+    private readonly _header= { 'x-api-key': this._key };
   
-  getAllTokens(publicKey: string | undefined | null) {
+    getAllTokens(publicKey: string | undefined | null) {
 
     if (!publicKey) {
       return of(null);
@@ -127,7 +127,32 @@ export class ActivityWallet {
     url.searchParams.set('wallet', publicKey);
     
     return this._httpClient.get<{
-      result: { balance: number; info: { name: string, symbol: string, image: string }; }[]
+      result: { address: string ; balance: number; info: { name: string, symbol: string, image: string }; }[];
+    }>(url.toString(), { headers: this._header })
+    .pipe(map((response) => response.result));
+  }
+}
+
+
+@Injectable({ providedIn: 'root' })
+  export class TokensList2 {
+    private readonly _httpClient= inject(HttpClient);
+    private readonly _key = '2Uxl_qOb31_gMXfy'
+    private readonly _header= { 'x-api-key': this._key };
+  
+    getAllTokens2(publicKey: string | undefined | null) {
+
+    if (!publicKey) {
+      return of(null);
+    }
+    
+    const url = new URL('https://api.shyft.to/sol/v1/wallet/all_tokens');
+
+    url.searchParams.set('network', 'mainnet-beta');
+    url.searchParams.set('wallet', publicKey);
+    
+    return this._httpClient.get<{
+      result: { address: string ; balance: number; info: { name: string, symbol: string, image: string }; }[];
     }>(url.toString(), { headers: this._header })
     .pipe(map((response) => response.result));
   }

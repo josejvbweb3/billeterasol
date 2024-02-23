@@ -28,10 +28,7 @@ import { MatButton } from '@angular/material/button';
 })
 
 export class TokensSectionComponent {
-// onCancel() {
-// throw new Error('Method not implemented.');
-// }
-   
+
     private readonly _solBalance = inject(SolBalance);
     private readonly _walletStore1 = inject(WalletStore);
     private readonly _publicKey1 = toSignal(this._walletStore1.publicKey$);

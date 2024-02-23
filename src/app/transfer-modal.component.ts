@@ -1,10 +1,13 @@
 import { Component, computed, inject } from "@angular/core";
 import { TransferFormComponent, TransferFormPayload } from './transfer-form.component';
-import { injectTransactionSender } from "@heavy-duty/wallet-adapter";
+import { WalletStore, injectTransactionSender } from "@heavy-duty/wallet-adapter";
 import { createTransferInstructions } from '@heavy-duty/spl-utils';
 import { MatDialogRef } from "@angular/material/dialog";
-import { MatSnackBar } from "@angular/material/snack-bar";
+//import { MatSnackBar } from "@angular/material/snack-bar";
 import { MatProgressSpinner} from "@angular/material/progress-spinner"
+import { TokensList2 } from "./shyft-api.services";
+import { computedAsync } from "ngxtension/computed-async";
+import { toSignal } from "@angular/core/rxjs-interop";
 
 @Component ({
     selector: 'billeterasol-transfer-modal',
@@ -12,15 +15,35 @@ import { MatProgressSpinner} from "@angular/material/progress-spinner"
         <div class="px-8 pt-16 pb-8">
             <h2 class="text-3xl text-center mb-8">Transfer tokens</h2>
 
-            <billeterasol-transfer-form (submitForm)="onTransfer($event)"></billeterasol-transfer-form>
+            <billeterasol-transfer-form
+                
+                (tokens2)="allTokens2() ?? []"
+                (sendTransfer)="onSendTransfer($event)"
+                (cancelTransfer)="onCancelTransfer()"
+            ></billeterasol-transfer-form>
+
+            @if (isRunning()) {
+                <div class="absolute w-full h-full top-0 left-0 bg-black bg-opacity 50 flex">
+
+                <mat-progress-spinner
+                    color="primary"
+                    mode="indeterminate"
+                    diameter="64"
+                ></mat-progress-spinner>
+                <p class="capitalize text-xl">{{ transactionStatus() }}...</p>
+                </div>
+            }
         </div>`,
     standalone: true,
-    imports: [TransferFormComponent, MatProgressSpinner ],
+    imports: [TransferFormComponent, MatProgressSpinner, TransferModalComponent],
 })
 export class TransferModalComponent {
+    //private readonly _matSnackBar = inject(MatSnackBar);
     private readonly _matDialogRef = inject(MatDialogRef);
-    private readonly _matSnackBar = inject(MatSnackBar);
+    private readonly _walletStore = inject(WalletStore);
+    private readonly _publicKey = toSignal(this._walletStore.publicKey$);
     private readonly _transactionSender = injectTransactionSender();
+    private readonly _tokensList2 = inject(TokensList2);
 
     readonly transactionStatus = computed(() => this._transactionSender().status);
     readonly isRunning = computed(
@@ -30,17 +53,20 @@ export class TransferModalComponent {
             this.transactionStatus() === 'finalizing',
     );
 
-    onTransfer(payload: TransferFormPayload) {
+    readonly allTokens2 = computedAsync(() => this._tokensList2.getAllTokens2(this._publicKey()?.toBase58()),);
+    
+
+    onSendTransfer(payload: TransferFormPayload) {
         this._matDialogRef.disableClose = true;
 
         
         this._transactionSender
             .send(({  publicKey }) =>
                 createTransferInstructions ({
-                    amount: payload.amount,
-                    mintAddress: '7EYnhQoR9YM3N7UoaKRoA44Uy8JeaZV3qyouov87awMs',
-                    receiverAddress: payload.receiverAddress,
                     senderAddress: publicKey.toBase58(),
+                    receiverAddress: payload.receiverAddress,
+                    mintAddress: payload.mintAddress,
+                    amount: payload.amount,
                     fundReceiver: true,
                     memo: payload.memo,
             }) )
@@ -49,5 +75,8 @@ export class TransferModalComponent {
                 error: error => console.error(error),
                 complete: () => console.log('Transaction complete'),
             })
+    }
+    onCancelTransfer() {
+        this.onCancelTransfer;
     }
 }
