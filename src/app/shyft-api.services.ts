@@ -84,4 +84,28 @@ export class ActivityWallet {
   }
 }
 
+@Injectable({ providedIn: 'root' })
+  export class NftList {
+    private readonly _httpClient= inject(HttpClient);
+    private readonly _key = '2Uxl_qOb31_gMXfy'
+    private readonly _header= { 'x-api-key': this._key };
+  
+    getAllNfts(publicKey: string | undefined | null) {
+
+    if (!publicKey) {
+      return of(null);
+    }
+    
+    const url = new URL('https://api.shyft.to/sol/v1/nft/read_all');
+
+    url.searchParams.set('network', 'mainnet-beta');
+    url.searchParams.set('wallet', publicKey);
+    
+    return this._httpClient.get<{
+      result: { symbol: string ;  image_uri: string  }[];
+    }>(url.toString(), { headers: this._header })
+    .pipe(map((response) => response.result));
+  }
+}
+
 

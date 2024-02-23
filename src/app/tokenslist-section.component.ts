@@ -16,7 +16,7 @@ import { MatButton } from '@angular/material/button';
     imports: [MatTableModule, MatCard, MatButton],
     standalone: true,
     template: `
-    <mat-card class=" px-4 py-8 bg-white bg-opacity-5">
+    <mat-card class=" px-4 py-8 bg-black">
       <h2 class="text-center justify text-3xl mb-4">Tokens</h2>
 
       @if (!allTokens()) {
@@ -26,29 +26,29 @@ import { MatButton } from '@angular/material/button';
       } @else  {
         <table mat-table [dataSource]="allTokens() ?? []">
           <ng-container matColumnDef="image">
-            <th mat-header-cell *matHeaderCellDef>image</th>
+            <th mat-header-cell *matHeaderCellDef></th>
             <td mat-cell *matCellDef="let element"><img [src]="element.info.image" [width]="50"/></td>
           </ng-container>
 
           <ng-container matColumnDef="name">
-            <th mat-header-cell *matHeaderCellDef [width]="350">name</th>
+            <th mat-header-cell *matHeaderCellDef></th>
             <td mat-cell *matCellDef="let element">{{ element.info.name }}</td>
           </ng-container>
 
           <ng-container matColumnDef="balance">
-            <th mat-header-cell *matHeaderCellDef [width]="100">balance</th>
+            <th mat-header-cell *matHeaderCellDef ></th>
             <td mat-cell *matCellDef="let element">{{ element.balance }}</td>
           </ng-container>
 
           <ng-container matColumnDef="symbol">
-            <th mat-header-cell *matHeaderCellDef>symbol</th>
+            <th mat-header-cell *matHeaderCellDef></th>
             <td mat-cell *matCellDef="let element">{{ element.info.symbol }}</td>
           </ng-container>
 
           <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
           <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
         </table>
-        <footer class="flex justify-center ">
+        <footer class="flex justify-center px-4 py-8">
                 <button mat-raised-button color="primary" (click)="onTransfer()">Transfer tokens</button>
         </footer>
       }

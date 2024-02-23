@@ -7,9 +7,9 @@ export const appRoutes: Route[] = [
             import('./balance-page.component').then((m) => m.BalancePageComponent),
     },
     {
-        path: 'settings',
+        path: 'collectibles',
         loadComponent: () => 
-            import('./settings-page.component').then((m) => m.SettingsPageComponent),
+            import('./collectibles-page.component').then((m) => m.CollectiblesPageComponent),
     },
     {
         path: '**',

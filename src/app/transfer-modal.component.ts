@@ -17,13 +17,14 @@ import { toSignal } from "@angular/core/rxjs-interop";
 
             <billeterasol-transfer-form
                 
-                (tokens2)="allTokens2() ?? []"
+                [tokens]="allTokens() ?? []"
                 (sendTransfer)="onSendTransfer($event)"
                 (cancelTransfer)="onCancelTransfer()"
-            ></billeterasol-transfer-form>
+            >
+            </billeterasol-transfer-form>
 
             @if (isRunning()) {
-                <div class="absolute w-full h-full top-0 left-0 bg-black bg-opacity 50 flex">
+                <div class="absolute w-full h-full top-0 left-0 flex">
 
                 <mat-progress-spinner
                     color="primary"
@@ -53,7 +54,7 @@ export class TransferModalComponent {
             this.transactionStatus() === 'finalizing',
     );
 
-    readonly allTokens2 = computedAsync(() => this._tokensList.getAllTokens(this._publicKey()?.toBase58()),);
+    readonly allTokens = computedAsync(() => this._tokensList.getAllTokens(this._publicKey()?.toBase58()),);
     
 
     onSendTransfer(payload: TransferFormPayload) {

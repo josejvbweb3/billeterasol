@@ -15,7 +15,7 @@ import { ConnectionStore } from '@heavy-duty/wallet-adapter';
   standalone: true,
 
   template: `
-    <header class="py-8">
+    <header class="py-8 bg-black">
       <h1 class="text-5xl text-center mb-4">Wallet</h1>
 
       <div class="flex justify-center mb-4">
@@ -30,7 +30,7 @@ import { ConnectionStore } from '@heavy-duty/wallet-adapter';
             <a [routerLink]="['']" mat-raised-button>Balance</a>
           </li>
           <li>
-            <a [routerLink]="['settings']" mat-raised-button>Settings</a>
+            <a [routerLink]="['collectibles']" mat-raised-button>Collectibles</a>
           </li>
         </ul>
       </nav>

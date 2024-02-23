@@ -10,7 +10,7 @@ import { MatButton } from '@angular/material/button';
     selector: 'billeterasol-tokens-section',
     imports: [MatButton],
     template: `
-        <section class="px-4 py-8 bg-white bg-opacity-5">
+        <section class="px-4 py-8 bg-black">
             <p class="text-center text-3xl mb-6">Balance</p>
         
        <section>

@@ -11,7 +11,7 @@ import { MatTableModule } from '@angular/material/table';
     imports: [MatTableModule, MatCard],
     standalone: true,
     template: `
-    <mat-card class=" px-4 py-8">
+    <mat-card class=" px-4 py-8 bg-black">
       <h2 class="text-center justify text-3xl mb-4">Activity</h2>
 
       @if (!transactions()) {

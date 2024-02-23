@@ -12,7 +12,7 @@ export interface TransferFormModel {
     receiverAddress: string | null;
     memo: string | null;
     amount: number | null;
-    tokens2: {
+    tokens: {
         address: string; 
         balance: number;
         info: { name: string; symbol: string; image: string };
@@ -33,24 +33,24 @@ export interface TransferFormPayload {
             <mat-form-field class=" w-full mb-4">
                 <mat-label>Token</mat-label>
                 <mat-select 
-                    [(ngModel)]="model.tokens2" 
-                    name="token2" 
+                    [(ngModel)]="model.tokens" 
+                    name="token" 
                     required
-                    #token2Control="ngModel"
+                    #tokenControl="ngModel"
                 >
-                @for (token1 of tokens2(); track token1) {
-                    <mat-option [value]="token1.address">
+                @for (token of tokens(); track token) {
+                    <mat-option [value]="token.address">
                     <div class="flex items-center gap-2">
-                        <img [src]="token1.info.image" class="rounded-full" w-8 h-8 />
-                        <span>{{ token1.info.symbol }}</span>
+                        <img [src]="token.info.image" class="rounded-full w-8 h-8"/>
+                        <span>{{ token.info.symbol }}</span>
                     </div>
                     </mat-option>
                 }
             </mat-select>
             
-            @if (form1.submitted && token2Control.errors) {
+            @if (form1.submitted && tokenControl.errors) {
                 <mat-error>
-                    @if (token2Control.errors['required']) {
+                    @if (tokenControl.errors['required']) {
                         token required.
                     }
                 </mat-error>
@@ -97,7 +97,7 @@ export interface TransferFormPayload {
                 required
                 #amountControl="ngModel"
                 
-                [max]="token2Control.value?.balance ?? undefined "
+                [max]="tokenControl.value?.balance ?? undefined "
             />
             <mat-icon matSuffix>attach_money</mat-icon>
 
@@ -108,7 +108,7 @@ export interface TransferFormPayload {
                     } @else if (amountControl.errors['min']) {
                         the quantity must be greater than 0
                     } @else if (amountControl.errors['max']) {
-                        the quantity must be minor than {{ token2Control.value.balance }}
+                        the quantity must be minor than {{ tokenControl.value.balance }}
                     }
                 </mat-error>
             }
@@ -166,7 +166,7 @@ export class TransferFormComponent {
 
     private readonly _matSnackbar = inject(MatSnackBar);
     
-    readonly tokens2 = input<{ address: string, balance: number, info: { name: string, symbol: string, image: string} }[]>([]);
+    readonly tokens = input<{ address: string, balance: number, info: { name: string, symbol: string, image: string} }[]>([]);
     
       //readonly disabled = input<boolean>(false);
     
@@ -174,7 +174,7 @@ export class TransferFormComponent {
       @Output() readonly cancelTransfer = new EventEmitter();
        
     readonly model: TransferFormModel = {
-        tokens2: null,
+        tokens: null,
         memo: null,
         amount: null,
         receiverAddress: null
@@ -183,7 +183,7 @@ export class TransferFormComponent {
     onSubmit(form: NgForm) {
         if (
             form.invalid  || 
-            this.model.tokens2?.address === null ||  
+            this.model.tokens?.address === null ||  
             this.model.amount === null || 
             this.model.memo ===  null || 
             this.model.receiverAddress === null 
