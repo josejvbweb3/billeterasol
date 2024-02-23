@@ -99,7 +99,7 @@ export class ActivityWallet {
     const url = new URL('https://api.shyft.to/sol/v1/nft/read_all');
 
     url.searchParams.set('network', 'mainnet-beta');
-    url.searchParams.set('wallet', publicKey);
+    url.searchParams.set('address', publicKey);
     
     return this._httpClient.get<{
       result: { symbol: string ;  image_uri: string  }[];

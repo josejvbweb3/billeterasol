@@ -23,12 +23,12 @@ import { MatButton } from '@angular/material/button';
         <p class="text-center">no NFTs.</p>
       } @else  {
         <table mat-table [dataSource]="allNfts() ?? []">
-          <ng-container matColumnDef="image">
+          <ng-container matColumnDef="image_uri">
             <th mat-header-cell *matHeaderCellDef></th>
-            <td mat-cell *matCellDef="let element"><img [src]="element.image_uri"/></td>
+            <td mat-cell *matCellDef="let element"><img [src]="element.image_uri" [width]="200"/></td>
           </ng-container>
 
-          <ng-container matColumnDef="name">
+          <ng-container matColumnDef="symbol">
             <th mat-header-cell *matHeaderCellDef></th>
             <td mat-cell *matCellDef="let element">{{ element.symbol }}</td>
           </ng-container>
@@ -55,6 +55,6 @@ export class CollectiblesSectionComponent {
     
     );
 
-    displayedColumns: string[] = ['symbol', 'imagen_uri' ];
+    displayedColumns: string[] = ['symbol', 'image_uri' ];
 
 }
