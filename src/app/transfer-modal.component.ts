@@ -5,7 +5,7 @@ import { createTransferInstructions } from '@heavy-duty/spl-utils';
 import { MatDialogRef } from "@angular/material/dialog";
 //import { MatSnackBar } from "@angular/material/snack-bar";
 import { MatProgressSpinner} from "@angular/material/progress-spinner"
-import { TokensList2 } from "./shyft-api.services";
+import { TokensList } from "./shyft-api.services";
 import { computedAsync } from "ngxtension/computed-async";
 import { toSignal } from "@angular/core/rxjs-interop";
 
@@ -43,7 +43,7 @@ export class TransferModalComponent {
     private readonly _walletStore = inject(WalletStore);
     private readonly _publicKey = toSignal(this._walletStore.publicKey$);
     private readonly _transactionSender = injectTransactionSender();
-    private readonly _tokensList2 = inject(TokensList2);
+    private readonly _tokensList = inject(TokensList);
 
     readonly transactionStatus = computed(() => this._transactionSender().status);
     readonly isRunning = computed(
@@ -53,7 +53,7 @@ export class TransferModalComponent {
             this.transactionStatus() === 'finalizing',
     );
 
-    readonly allTokens2 = computedAsync(() => this._tokensList2.getAllTokens2(this._publicKey()?.toBase58()),);
+    readonly allTokens2 = computedAsync(() => this._tokensList.getAllTokens(this._publicKey()?.toBase58()),);
     
 
     onSendTransfer(payload: TransferFormPayload) {

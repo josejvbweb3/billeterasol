@@ -8,9 +8,6 @@ import { MatSnackBar } from "@angular/material/snack-bar";
 import { MatOption, MatSelect } from "@angular/material/select";
 
 
-
-
-
 export interface TransferFormModel {
     receiverAddress: string | null;
     memo: string | null;
