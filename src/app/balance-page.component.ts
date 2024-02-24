@@ -3,6 +3,7 @@ import { TokensSectionComponent } from './tokens-section.component';
 import { TransactionsSectionComponent } from './transactions-section.component';
 import { TokensListSectionComponent } from './tokenslist-section.component';
 
+
 @Component({
     selector: 'billeterasol-balance-page',
     template: `

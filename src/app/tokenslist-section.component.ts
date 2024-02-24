@@ -15,6 +15,7 @@ import { MatButton } from '@angular/material/button';
     selector: 'billeterasol-tokenslist-section',
     imports: [MatTableModule, MatCard, MatButton],
     standalone: true,
+    styleUrls: ['../styles.scss'],
     template: `
     <mat-card class=" px-4 py-8 bg-black">
       <h2 class="text-center justify text-3xl mb-4">Tokens</h2>

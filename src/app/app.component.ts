@@ -39,6 +39,7 @@ import { ConnectionStore } from '@heavy-duty/wallet-adapter';
     <main>
       <router-outlet></router-outlet>
     </main>
+    
   `,
 })
 export class AppComponent implements OnInit{

@@ -10,6 +10,7 @@ import { MatTableModule } from '@angular/material/table';
     selector: 'billeterasol-transactions-section',
     imports: [MatTableModule, MatCard],
     standalone: true,
+    styleUrls: ['../styles.scss'],
     template: `
     <mat-card class=" px-4 py-8 bg-black">
       <h2 class="text-center justify text-3xl mb-4">Activity</h2>
