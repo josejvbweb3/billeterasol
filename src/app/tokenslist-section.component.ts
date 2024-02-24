@@ -8,12 +8,13 @@ import { MatTableModule } from '@angular/material/table';
 import { MatDialog } from '@angular/material/dialog';
 import { TransferModalComponent } from './transfer-modal.component';
 import { MatButton } from '@angular/material/button';
+import { DecimalPipe } from '@angular/common';
 
 
 
 @Component({
     selector: 'billeterasol-tokenslist-section',
-    imports: [MatTableModule, MatCard, MatButton],
+    imports: [MatTableModule, MatCard, MatButton, DecimalPipe],
     standalone: true,
     styleUrls: ['../styles.scss'],
     template: `
@@ -38,7 +39,7 @@ import { MatButton } from '@angular/material/button';
 
           <ng-container matColumnDef="balance">
             <th mat-header-cell *matHeaderCellDef ></th>
-            <td mat-cell *matCellDef="let element">{{ element.balance }}</td>
+            <td mat-cell *matCellDef="let element">{{ element.balance | number }}</td>
           </ng-container>
 
           <ng-container matColumnDef="symbol">

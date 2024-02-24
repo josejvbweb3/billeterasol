@@ -4,11 +4,13 @@ import { WalletStore } from '@heavy-duty/wallet-adapter';
 import { computedAsync } from 'ngxtension/computed-async';
 import { SolBalance } from './shyft-api.services';
 import { MatButton } from '@angular/material/button';
+import { PriceTokenJupex } from './shyft-api.services';
+import { DecimalPipe } from '@angular/common';
 
 
 @Component({
     selector: 'billeterasol-tokens-section',
-    imports: [MatButton],
+    imports: [MatButton, DecimalPipe ],
     template: `
         <section class="px-4 py-8 bg-black">
             <p class="text-center text-3xl mb-6">Balance</p>
@@ -17,9 +19,16 @@ import { MatButton } from '@angular/material/button';
        @if (account1()) {
         <div 
           class=" flex justify-center items-center gap-2 mb-4">
-          <img src="https://i.ibb.co/Wtb15V7/solana-sol-seeklogo.png" class="w-8 h-8" />
-          <p class="text-xl">{{ account1()?.balance }} SOL</p>
+          <img src="https://i.ibb.co/Wtb15V7/solana-sol-seeklogo.png" class="w-12 h-12"/>
+          <p class="text-3xl">SOLANA</p>
+          <p class="text-2xl">{{ account1()?.balance | number }} SOL</p>
+          
         </div>
+        <div class=" flex justify-center items-center">
+          <p class="text-1xl">1 SOL --> </p>
+        <p class="text-1xl">{{ tokenPrice()?.SOL?.price | number }} $</p>
+        </div>
+
       }
      
       
@@ -33,12 +42,21 @@ export class TokensSectionComponent {
     private readonly _walletStore1 = inject(WalletStore);
     private readonly _publicKey1 = toSignal(this._walletStore1.publicKey$);
     
- 
+    
+    
     readonly account1 = computedAsync(
-        () => this._solBalance.getAccount2(this._publicKey1()?.toBase58()),
-        { requireSync: false, initialValue: null},
-    );
-
-
+      () => this._solBalance.getAccount2(this._publicKey1()?.toBase58()),
+      { requireSync: false, initialValue: null},
+      );
+      
+    private readonly _pricetoken = inject(PriceTokenJupex);
+    private readonly _walletStore = inject(WalletStore);
+    private readonly _publicKey = toSignal(this._walletStore.publicKey$);
+  
+    readonly tokenPrice = computedAsync(
+      () => this._pricetoken.getPriceToken(this._publicKey()?.toBase58()),
+      { requireSync: false, initialValue: null},
+      );
 
 }
+

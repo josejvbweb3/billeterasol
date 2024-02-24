@@ -5,10 +5,11 @@ import { computedAsync } from 'ngxtension/computed-async';
 import { ActivityWallet } from './shyft-api.services';
 import { MatCard } from '@angular/material/card';
 import { MatTableModule } from '@angular/material/table';
+import { DatePipe } from '@angular/common';
 
 @Component({
     selector: 'billeterasol-transactions-section',
-    imports: [MatTableModule, MatCard],
+    imports: [MatTableModule, MatCard, DatePipe ],
     standalone: true,
     styleUrls: ['../styles.scss'],
     template: `
@@ -32,8 +33,8 @@ import { MatTableModule } from '@angular/material/table';
           </ng-container>
 
           <ng-container matColumnDef="timestamp">
-            <th mat-header-cell *matHeaderCellDef>Timestamp</th>
-            <td mat-cell *matCellDef="let element">{{ element.timestamp }}</td>
+            <th mat-header-cell *matHeaderCellDef>Time</th>
+            <td mat-cell *matCellDef="let element">{{ element.timestamp | date: 'medium'}}</td>
           </ng-container>
 
           <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
