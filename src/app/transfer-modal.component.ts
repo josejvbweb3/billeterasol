@@ -58,7 +58,7 @@ export class TransferModalComponent {
     
 
     onSendTransfer(payload: TransferFormPayload) {
-        this._matDialogRef.disableClose = true;
+        //this._matDialogRef.disableClose = true;
 
         
         this._transactionSender

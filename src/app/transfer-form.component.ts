@@ -12,7 +12,7 @@ export interface TransferFormModel {
     receiverAddress: string | null;
     memo: string | null;
     amount: number | null;
-    tokens: {
+    token: {
         address: string; 
         balance: number;
         info: { name: string; symbol: string; image: string };
@@ -33,13 +33,13 @@ export interface TransferFormPayload {
             <mat-form-field class=" w-full mb-4">
                 <mat-label>Token</mat-label>
                 <mat-select 
-                    [(ngModel)]="model.tokens" 
+                    [(ngModel)]="model.token" 
                     name="token" 
                     required
                     #tokenControl="ngModel"
                 >
                 @for (token of tokens(); track token) {
-                    <mat-option [value]="token.address">
+                    <mat-option [value]="token">
                     <div class="flex items-center gap-2">
                         <img [src]="token.info.image" class="rounded-full w-8 h-8"/>
                         <span>{{ token.info.symbol }}</span>
@@ -143,7 +143,7 @@ export interface TransferFormPayload {
 
             <footer class="flex justify-center gap-4" >
                 <button type="submit" mat-raised-button color="primary" >Send</button>
-                <!-- <button type="button" mat-raised-button color="warn" (click)="onCancel()">Cancel</button> -->
+                <button type="button" mat-raised-button color="warn" (click)="onCancel()">Cancel</button>
             </footer>
 
         </form> 
@@ -174,7 +174,7 @@ export class TransferFormComponent {
       @Output() readonly cancelTransfer = new EventEmitter();
        
     readonly model: TransferFormModel = {
-        tokens: null,
+        token: null,
         memo: null,
         amount: null,
         receiverAddress: null
@@ -183,7 +183,7 @@ export class TransferFormComponent {
     onSubmit(form: NgForm) {
         if (
             form.invalid  || 
-            this.model.tokens?.address === null ||  
+            this.model.token === null ||  
             this.model.amount === null || 
             this.model.memo ===  null || 
             this.model.receiverAddress === null 
@@ -194,7 +194,7 @@ export class TransferFormComponent {
             });
         } else {
               this.sendTransfer.emit({
-                mintAddress: this.model.memo,// hay que cambiar este valor por mintAdress
+                mintAddress: this.model.token.address,
                 amount: this.model.amount * 10 ** 9,
                 memo: this.model.memo,
                 receiverAddress: this.model.receiverAddress
@@ -203,7 +203,7 @@ export class TransferFormComponent {
 
         
     }
-    //onCancel() {
-    //    this.cancelTransfer.emit();
-    //}
+    onCancel() {
+        this.cancelTransfer.emit();
+    }
 }
