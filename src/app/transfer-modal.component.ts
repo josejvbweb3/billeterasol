@@ -58,7 +58,7 @@ export class TransferModalComponent {
     
 
     onSendTransfer(payload: TransferFormPayload) {
-        //this._matDialogRef.disableClose = true;
+        this._matDialogRef.disableClose = true;
 
         
         this._transactionSender
@@ -72,8 +72,14 @@ export class TransferModalComponent {
                     memo: payload.memo,
             }) )
             .subscribe({
-                next: (signature) => console.log(`Firma: ${signature}`),
-                error: error => console.error(error),
+                next: (signature) => {
+                    console.log(`Firma: ${signature}`);
+                    this._matDialogRef.close();
+                },
+                error: error => {
+                    console.error(error)
+                    this._matDialogRef.disableClose = false;
+                },
                 complete: () => console.log('Transaction complete'),
             })
     }
