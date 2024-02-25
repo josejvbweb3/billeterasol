@@ -3,7 +3,7 @@ import { TransferFormComponent, TransferFormPayload } from './transfer-form.comp
 import { WalletStore, injectTransactionSender } from "@heavy-duty/wallet-adapter";
 import { createTransferInstructions } from '@heavy-duty/spl-utils';
 import { MatDialogRef } from "@angular/material/dialog";
-//import { MatSnackBar } from "@angular/material/snack-bar";
+import { MatSnackBar } from "@angular/material/snack-bar";
 import { MatProgressSpinner} from "@angular/material/progress-spinner"
 import { TokensList } from "./shyft-api.services";
 import { computedAsync } from "ngxtension/computed-async";
@@ -39,7 +39,7 @@ import { toSignal } from "@angular/core/rxjs-interop";
     imports: [TransferFormComponent, MatProgressSpinner, TransferModalComponent],
 })
 export class TransferModalComponent {
-    //private readonly _matSnackBar = inject(MatSnackBar);
+    private readonly _matSnackbar = inject(MatSnackBar);
     private readonly _matDialogRef = inject(MatDialogRef);
     private readonly _walletStore = inject(WalletStore);
     private readonly _publicKey = toSignal(this._walletStore.publicKey$);
@@ -59,7 +59,7 @@ export class TransferModalComponent {
 
     onSendTransfer(payload: TransferFormPayload) {
         this._matDialogRef.disableClose = true;
-
+        
         
         this._transactionSender
             .send(({  publicKey }) =>
@@ -80,7 +80,9 @@ export class TransferModalComponent {
                     console.error(error)
                     this._matDialogRef.disableClose = false;
                 },
-                complete: () => console.log('Transaction complete'),
+                complete: () => {console.log('Transaction complete')
+                this._matSnackbar.open('transaction done', 'close', {duration:4000, horizontalPosition: 'end'})}
+                
             })
     }
     onCancelTransfer() {

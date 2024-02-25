@@ -197,7 +197,8 @@ export class TransferFormComponent {
                 mintAddress: this.model.token.address,
                 amount: this.model.amount * 10 ** 9,
                 memo: this.model.memo,
-                receiverAddress: this.model.receiverAddress
+                receiverAddress: this.model.receiverAddress,
+                
               })
         }
 
