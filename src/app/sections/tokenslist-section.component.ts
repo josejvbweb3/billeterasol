@@ -9,9 +9,6 @@ import { MatDialog } from '@angular/material/dialog';
 import { TransferModalComponent } from '../transfer-modal.component';
 import { MatButton } from '@angular/material/button';
 import { DecimalPipe } from '@angular/common';
-
-
-
 @Component({
     selector: 'billeterasol-tokenslist-section',
     imports: [MatTableModule, MatCard, MatButton, DecimalPipe],
@@ -29,7 +26,8 @@ import { DecimalPipe } from '@angular/common';
         <button mat-raised-button color="primary" (click)="onTransfer()">BUY    </button>
         <button mat-raised-button color="primary" (click)="onTransfer()">RECEIVE</button>
         </div>
-        <table mat-table [dataSource]="allTokens() ?? []">
+        <div style="border-top: 20px solid transparent;"></div> 
+        <table mat-table [dataSource]="allTokens() ?? []" style="background-color: black;">
           
           <ng-container matColumnDef="image">
             <th mat-header-cell *matHeaderCellDef></th>
@@ -53,11 +51,8 @@ import { DecimalPipe } from '@angular/common';
 
           <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
           <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
-        </table>
-        <footer class="flex justify-center px-4 py-8">
-                
-        </footer>
-      }
+      </table>   
+    }  
       
     </mat-card>
   `,
@@ -69,7 +64,7 @@ export class TokensListSectionComponent {
     private readonly _walletStore = inject(WalletStore);
     private readonly _publicKey = toSignal(this._walletStore.publicKey$);
     private readonly _matDialog = inject(MatDialog);
-    
+
     readonly allTokens = computedAsync(
         () => this._tokensList.getAllTokens(this._publicKey()?.toBase58()),
     
@@ -80,4 +75,6 @@ export class TokensListSectionComponent {
     onTransfer() {
       this._matDialog.open(TransferModalComponent);
     }
+
+    
 }

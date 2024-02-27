@@ -11,17 +11,17 @@ import { DatePipe } from '@angular/common';
     selector: 'billeterasol-activity-section',
     imports: [MatTableModule, MatCard, DatePipe ],
     standalone: true,
-    //styleUrls: ['../styles.scss'],
+    styleUrls: ['../../styles.scss'],
     template: `
     <mat-card class=" px-4 py-8 bg-black">
-      <h2 class="text-center justify text-3xl mb-4">Activity</h2>
+      <h2 class="text-center justify text-3xl mb-4 bg-black">Activity</h2>
 
       @if (!transactions()) {
         <p class="text-center">conect your wallet.</p>
       } @else if (transactions()?.length === 0) {
         <p class="text-center">no Activity.</p>
       } @else {
-        <table mat-table [dataSource]="transactions() ?? []">
+        <table mat-table [dataSource]="transactions() ?? []" style="background-color: black;">
           <ng-container matColumnDef="type">
             <th mat-header-cell *matHeaderCellDef>Type</th>
             <td mat-cell *matCellDef="let element">{{ element.type }}</td>

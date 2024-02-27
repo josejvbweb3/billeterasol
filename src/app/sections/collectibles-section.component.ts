@@ -16,14 +16,14 @@ import { MatButton } from '@angular/material/button';
     styleUrls: ['../../styles.scss'],
     template: `
     <mat-card class=" px-4 py-8 bg-black">
-      <h2 class="text-center justify text-3xl mb-4">Collectibles</h2>
+      <h2 class="text-center justify text-3xl mb-4 bg-black">Collectibles</h2>
 
       @if (!allNfts()) {
         <p class="text-center">conect your wallet.</p>
       } @else if (allNfts()?.length === 0) {
         <p class="text-center">no NFTs.</p>
       } @else  {
-        <table mat-table [dataSource]="allNfts() ?? []">
+        <table mat-table [dataSource]="allNfts() ?? []" style="background-color: black;">
           <ng-container matColumnDef="image_uri">
             <th mat-header-cell *matHeaderCellDef></th>
             <td mat-cell *matCellDef="let element"><img [src]="element.image_uri" [width]="200"/></td>
