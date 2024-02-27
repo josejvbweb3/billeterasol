@@ -29,7 +29,7 @@ export interface TransferFormPayload {
 @Component({
     selector: 'billeterasol-transfer-form',
     template: `
-        <form #form1="ngForm" class="w-[400px]" (ngSubmit)="onSubmit(form1)">
+        <form #form1="ngForm" class="w-[400px] bg-blue-950" (ngSubmit)="onSubmit(form1)">
             <mat-form-field class=" w-full mb-4">
                 <mat-label>Token</mat-label>
                 <mat-select 

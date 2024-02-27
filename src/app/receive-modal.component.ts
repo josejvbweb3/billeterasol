@@ -10,9 +10,9 @@ import { Clipboard } from "@angular/cdk/clipboard";
     selector: 'billeterasol-receive-modal',
     template: `
         
-        <div class="px-8 pt-16 pb-8 bg-black">
-            <h2 class="text-3xl text-center mb-8 bg-black">Receive tokens</h2>
-            <h2 class="text-3xl text-center mb-8 bg-black">
+        <div class="px-8 pt-16 pb-8 bg-blue-950">
+            <h2 class="text-3xl text-center mb-8 text-white">Receive tokens</h2>
+            <h2 class="text-3xl text-center mb-8 text-white">
                 {{ publicKey()?.toBase58() }} 
                 <mat-icon class="center" (click)="copyToClipboard(publicKey()?.toBase58())" fontIcon="content_copy"></mat-icon>
             </h2>

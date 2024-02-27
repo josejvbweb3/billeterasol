@@ -6,12 +6,14 @@ import { provideWalletAdapter } from '@heavy-duty/wallet-adapter'
 import { provideHttpClient } from '@angular/common/http';
 import { MatDialogModule } from '@angular/material/dialog';
 
+
 export const appConfig: ApplicationConfig = {
   providers: [
     provideRouter(appRoutes), 
     provideAnimationsAsync(), 
     provideWalletAdapter(),
     provideHttpClient(),
-    importProvidersFrom([MatDialogModule]),
+    importProvidersFrom([MatDialogModule]), provideAnimationsAsync(),
   ],
 };
+

@@ -12,8 +12,8 @@ import { toSignal } from "@angular/core/rxjs-interop";
 @Component ({
     selector: 'billeterasol-transfer-modal',
     template: `
-        <div class="px-8 pt-16 pb-8">
-            <h2 class="text-3xl text-center mb-8">Transfer tokens</h2>
+        <div class="px-8 pt-16 pb-8 bg-blue-800">
+            <h2 class="text-3xl text-center mb-8 bg-blue-800">Transfer tokens</h2>
 
             <billeterasol-transfer-form
                 

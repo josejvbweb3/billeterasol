@@ -13,15 +13,15 @@ import { DatePipe } from '@angular/common';
     standalone: true,
     styleUrls: ['../../styles.scss'],
     template: `
-    <mat-card class=" px-4 py-8 bg-black">
-      <h2 class="text-center justify text-3xl mb-4 bg-black">Activity</h2>
+    <mat-card class=" px-4 py-8 blur-background">
+      <h2 class="text-center justify text-3xl mb-4 text-white">Activity</h2>
 
       @if (!transactions()) {
-        <p class="text-center">conect your wallet.</p>
+        <p class="text-center text-white">conect your wallet.</p>
       } @else if (transactions()?.length === 0) {
-        <p class="text-center">no Activity.</p>
+        <p class="text-center text-white">no Activity.</p>
       } @else {
-        <table mat-table [dataSource]="transactions() ?? []" style="background-color: black;">
+        <table mat-table [dataSource]="transactions() ?? []" class=" bg-blue-800">
           <ng-container matColumnDef="type">
             <th mat-header-cell *matHeaderCellDef>Type</th>
             <td mat-cell *matCellDef="let element">{{ element.type }}</td>

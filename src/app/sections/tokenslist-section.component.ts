@@ -17,11 +17,11 @@ import { ReceiveModalComponent } from '../receive-modal.component';
     standalone: true,
     styleUrls: ['../../styles.scss'],
     template: `
-    <mat-card class=" px-4 py-8 bg-black">
+    <mat-card class=" px-4 py-8 blur-background">
       @if (!allTokens()) {
-        <p class="text-center">conect your wallet.</p>
+        <p class="text-center text-white">conect your wallet.</p>
       } @else if (allTokens()?.length === 0) {
-        <p class="text-center">no Activity.</p>
+        <p class="text-center text-white">no Activity.</p>
       } @else  {
         <div class="my-button-row center">
         <button mat-raised-button color="primary" (click)="onTransfer()">SEND   </button>
@@ -29,7 +29,7 @@ import { ReceiveModalComponent } from '../receive-modal.component';
         <button mat-raised-button color="primary" (click)="onReceive()">RECEIVE</button>
         </div>
         <div style="border-top: 20px solid transparent;"></div> 
-        <table mat-table [dataSource]="allTokens() ?? []" style="background-color: black;">
+        <table mat-table [dataSource]="allTokens() ?? []" class=" bg-blue-800">
           
           <ng-container matColumnDef="image">
             <th mat-header-cell *matHeaderCellDef></th>

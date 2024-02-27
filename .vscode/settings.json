@@ -1,3 +1,6 @@
 {
-    "scss.lint.unknownAtRules": "ignore"
+    "scss.lint.unknownAtRules": "ignore",
+    "githubPullRequests.ignoredPullRequestBranches": [
+        "josejvbweb3-se-agrega-visualizacion-activividad"
+    ]
 }
