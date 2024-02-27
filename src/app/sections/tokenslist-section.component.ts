@@ -33,7 +33,9 @@ import { ReceiveModalComponent } from '../receive-modal.component';
           
           <ng-container matColumnDef="image">
             <th mat-header-cell *matHeaderCellDef></th>
-            <td mat-cell *matCellDef="let element"><img [src]="element.info.image" [width]="50"/></td>
+            <td mat-cell *matCellDef="let element">
+              <img class="circular-image" [src]="element.info.image" [width]="50"/>
+            </td>
           </ng-container>
 
           <ng-container matColumnDef="name">
