@@ -2,16 +2,16 @@ import { Component, inject } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { WalletStore } from '@heavy-duty/wallet-adapter';
 import { computedAsync } from 'ngxtension/computed-async';
-import { ActivityWallet } from './shyft-api.services';
+import { ActivityWallet } from '../shyft-api.services';
 import { MatCard } from '@angular/material/card';
 import { MatTableModule } from '@angular/material/table';
 import { DatePipe } from '@angular/common';
 
 @Component({
-    selector: 'billeterasol-transactions-section',
+    selector: 'billeterasol-activity-section',
     imports: [MatTableModule, MatCard, DatePipe ],
     standalone: true,
-    styleUrls: ['../styles.scss'],
+    //styleUrls: ['../styles.scss'],
     template: `
     <mat-card class=" px-4 py-8 bg-black">
       <h2 class="text-center justify text-3xl mb-4">Activity</h2>
@@ -45,7 +45,7 @@ import { DatePipe } from '@angular/common';
   `,
     
 })
-export class TransactionsSectionComponent {
+export class ActivitySectionComponent {
     private readonly _activityWallet3 = inject(ActivityWallet);
     private readonly _walletStore3 = inject(WalletStore);
     private readonly _publicKey = toSignal(this._walletStore3.publicKey$);

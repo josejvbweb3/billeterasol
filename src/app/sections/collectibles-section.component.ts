@@ -2,7 +2,7 @@ import { Component, inject } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { WalletStore } from '@heavy-duty/wallet-adapter';
 import { computedAsync } from 'ngxtension/computed-async';
-import { NftList } from './shyft-api.services';
+import { NftList } from '../shyft-api.services';
 import { MatCard } from '@angular/material/card';
 import { MatTableModule } from '@angular/material/table';
 import { MatButton } from '@angular/material/button';
@@ -13,7 +13,7 @@ import { MatButton } from '@angular/material/button';
     selector: 'billeterasol-collectibles-section',
     imports: [MatTableModule, MatCard, MatButton],
     standalone: true,
-    styleUrls: ['../styles.scss'],
+    styleUrls: ['../../styles.scss'],
     template: `
     <mat-card class=" px-4 py-8 bg-black">
       <h2 class="text-center justify text-3xl mb-4">Collectibles</h2>

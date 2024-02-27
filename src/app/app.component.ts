@@ -27,11 +27,15 @@ import { ConnectionStore } from '@heavy-duty/wallet-adapter';
       <nav>
         <ul class="flex justify-center items-center gap-4">
           <li>
-            <a [routerLink]="['']" mat-raised-button>Balance</a>
+            <a [routerLink]="['']" mat-raised-button>Tokens</a>
           </li>
           <li>
             <a [routerLink]="['collectibles']" mat-raised-button>Collectibles</a>
           </li>
+          <li>
+            <a [routerLink]="['activity']" mat-raised-button>Activity</a>
+          </li>
+
         </ul>
       </nav>
     </header>

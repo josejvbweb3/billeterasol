@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { CollectiblesSectionComponent } from './collectibles-section.component';
+import { CollectiblesSectionComponent } from '../sections/collectibles-section.component';
 
 @Component({
     selector: 'billeterasol-collectibles-page',

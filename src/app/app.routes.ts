@@ -4,12 +4,17 @@ export const appRoutes: Route[] = [
     {
         path: '',
         loadComponent: () => 
-            import('./balance-page.component').then((m) => m.BalancePageComponent),
+            import('./pages/balance-page.component').then((m) => m.BalancePageComponent),
     },
     {
         path: 'collectibles',
         loadComponent: () => 
-            import('./collectibles-page.component').then((m) => m.CollectiblesPageComponent),
+            import('./pages/collectibles-page.component').then((m) => m.CollectiblesPageComponent),
+    },
+    {
+        path: 'activity',
+        loadComponent: () => 
+            import('./pages/activity-page.component').then((m) => m.ActivityPageComponent),
     },
     {
         path: '**',
