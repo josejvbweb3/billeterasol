@@ -9,6 +9,8 @@ import { MatDialog } from '@angular/material/dialog';
 import { TransferModalComponent } from '../transfer-modal.component';
 import { MatButton } from '@angular/material/button';
 import { DecimalPipe } from '@angular/common';
+import { BuyModalComponent } from '../buy-modal.component';
+import { ReceiveModalComponent } from '../receive-modal.component';
 @Component({
     selector: 'billeterasol-tokenslist-section',
     imports: [MatTableModule, MatCard, MatButton, DecimalPipe],
@@ -23,8 +25,8 @@ import { DecimalPipe } from '@angular/common';
       } @else  {
         <div class="my-button-row center">
         <button mat-raised-button color="primary" (click)="onTransfer()">SEND   </button>
-        <button mat-raised-button color="primary" (click)="onTransfer()">BUY    </button>
-        <button mat-raised-button color="primary" (click)="onTransfer()">RECEIVE</button>
+        <button mat-raised-button color="primary" (click)="onBuy()">BUY    </button>
+        <button mat-raised-button color="primary" (click)="onReceive()">RECEIVE</button>
         </div>
         <div style="border-top: 20px solid transparent;"></div> 
         <table mat-table [dataSource]="allTokens() ?? []" style="background-color: black;">
@@ -76,5 +78,12 @@ export class TokensListSectionComponent {
       this._matDialog.open(TransferModalComponent);
     }
 
+    onBuy(){
+      this._matDialog.open(BuyModalComponent);
+    }
+
+    onReceive(){
+      this._matDialog.open(ReceiveModalComponent);
+    }
     
 }
