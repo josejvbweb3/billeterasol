@@ -5,7 +5,7 @@ import { createTransferInstructions } from '@heavy-duty/spl-utils';
 import { MatDialogRef } from "@angular/material/dialog";
 import { MatSnackBar } from "@angular/material/snack-bar";
 import { MatProgressSpinner} from "@angular/material/progress-spinner"
-import { TokensList } from "./shyft-api.services";
+import { TokensList } from "./services/shyft-api.services";
 import { computedAsync } from "ngxtension/computed-async";
 import { toSignal } from "@angular/core/rxjs-interop";
 

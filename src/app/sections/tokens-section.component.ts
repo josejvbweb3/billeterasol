@@ -2,9 +2,9 @@ import { Component, inject } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { WalletStore } from '@heavy-duty/wallet-adapter';
 import { computedAsync } from 'ngxtension/computed-async';
-import { SolBalance } from '../shyft-api.services';
+import { SolBalance } from '../services/shyft-api.services';
 import { MatButton } from '@angular/material/button';
-import { PriceTokenSol } from '../shyft-api.services';
+import { PriceTokenSol } from '../services/shyft-api.services';
 import { DecimalPipe } from '@angular/common';
 
 

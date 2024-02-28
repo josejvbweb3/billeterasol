@@ -2,7 +2,7 @@ import { Component, inject } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { WalletStore } from '@heavy-duty/wallet-adapter';
 import { computedAsync } from 'ngxtension/computed-async';
-import { TokensList } from '../shyft-api.services';
+import { TokensList } from '../services/shyft-api.services';
 import { MatCard } from '@angular/material/card';
 import { MatTableModule } from '@angular/material/table';
 import { MatDialog } from '@angular/material/dialog';
@@ -12,7 +12,7 @@ import { DecimalPipe } from '@angular/common';
 import { BuyModalComponent } from '../buy-modal.component';
 import { ReceiveModalComponent } from '../receive-modal.component';
 import { CommonModule } from '@angular/common';
-import { PriceTokenSilly } from '../shyft-api.services';
+import { PriceTokenSilly } from '../services/shyft-api.services';
 
 
 

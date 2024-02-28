@@ -2,7 +2,7 @@ import { Component, OnInit, inject } from '@angular/core';
 import { MatAnchor } from '@angular/material/button';
 import { RouterModule } from '@angular/router';
 import { HdWalletMultiButtonComponent} from '@heavy-duty/wallet-adapter-material';
-import { ActivityWallet } from './shyft-api.services';
+import { ActivityWallet } from './services/shyft-api.services';
 import { ConnectionStore } from '@heavy-duty/wallet-adapter';
 
 
@@ -52,6 +52,4 @@ export class AppComponent implements OnInit{
     this._connectionStore.setEndpoint(this._activityWallet.getEndpoint());
   }
 }
-
-
 
