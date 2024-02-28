@@ -48,3 +48,29 @@ div.center {
 .circular-image {
   border-radius: 50%;
 }
+
+.token-item {
+  display: flex; /* Utilizar flexbox */
+}
+
+.token-info {
+  display: flex; /* Utilizar flexbox */
+  align-items: center; /* Alinear los elementos verticalmente */
+}
+
+.token-name-balance {
+  display: flex; /* Utilizar flexbox */
+  flex-direction: column; /* Alinear elementos verticalmente */
+}
+// .token-info {
+//   display: flex; /* Utilizar flexbox */
+//   align-items: start;
+
+// /* Alinear los elementos verticalmente */
+// }
+.token-info-debajo {
+  
+  align-items: center;
+  display: inline-block;
+  text-underline-position: auto;
+}
