@@ -4,7 +4,7 @@ import { WalletStore } from '@heavy-duty/wallet-adapter';
 import { computedAsync } from 'ngxtension/computed-async';
 import { SolBalance } from '../shyft-api.services';
 import { MatButton } from '@angular/material/button';
-import { PriceTokenJupex } from '../shyft-api.services';
+import { PriceTokenSol } from '../shyft-api.services';
 import { DecimalPipe } from '@angular/common';
 
 
@@ -40,6 +40,7 @@ import { DecimalPipe } from '@angular/common';
   })
 
   export class TokensSectionComponent {
+    
 
     private readonly _solBalance = inject(SolBalance);
     private readonly _walletStore1 = inject(WalletStore);
@@ -50,7 +51,7 @@ import { DecimalPipe } from '@angular/common';
       { requireSync: false, initialValue: null},
     );
       
-    private readonly _pricetoken = inject(PriceTokenJupex);
+    private readonly _pricetoken = inject(PriceTokenSol);
     private readonly _walletStore = inject(WalletStore);
     private readonly _publicKey = toSignal(this._walletStore.publicKey$);
  
@@ -59,22 +60,31 @@ import { DecimalPipe } from '@angular/common';
       { requireSync: false, initialValue: null},
     );
     
+    
     calculateValueInUSD(): number {
       const balance = this.account1()?.balance;
-      const price = this.tokenPrice()?.SOL?.price;
-        if (balance && price) {
-          return balance * price;
+      const priceSol = this.tokenPrice()?.SOL?.price;
+        if (balance && priceSol) {
+          return balance * priceSol;
         }
         return 0;
       }
+    }
+  
+   
 
-  }
-
-
-
-
-
-
+    // export class PriceService {
+      
+    //   private priceSolValue: number;
+    
+    //   setPriceSol(value: number) {
+    //     this.priceSolValue = value;
+    //   }
+    
+    //   getPriceSol(): number {
+    //     return this.priceSolValue;
+    //   }
+    // }
        
 //        <ng-container *ngIf="account1()">
 //         <div 
@@ -100,32 +110,3 @@ import { DecimalPipe } from '@angular/common';
     
 // })
 
-// export class TokensSectionComponent {
-
-//     private readonly _solBalance = inject(SolBalance);
-//     private readonly _walletStore1 = inject(WalletStore);
-//     private readonly _publicKey1 = toSignal(this._walletStore1.publicKey$);
-    
-//     readonly account1 = computedAsync(
-//       () => this._solBalance.getAccount2(this._publicKey1()?.toBase58()),
-//       { requireSync: false, initialValue: null},
-//     );
-      
-//     private readonly _pricetoken = inject(PriceTokenJupex);
-//     private readonly _walletStore = inject(WalletStore);
-//     private readonly _publicKey = toSignal(this._walletStore.publicKey$);
-  
-//     readonly tokenPrice = computedAsync(
-//       () => this._pricetoken.getPriceToken(this._publicKey()?.toBase58()),
-//       { requireSync: false, initialValue: null},
-//     );
-
-//     calculateValueInUSD(): number {
-//       const balance = this.account1()?.balance;
-//       const price = this.tokenPrice()?.SOL?.price;
-//       if (balance && price) {
-//         return balance * price;
-//       }
-//       return 0;
-//     }
-// }

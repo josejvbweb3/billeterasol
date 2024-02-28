@@ -12,58 +12,19 @@ import { DecimalPipe } from '@angular/common';
 import { BuyModalComponent } from '../buy-modal.component';
 import { ReceiveModalComponent } from '../receive-modal.component';
 import { CommonModule } from '@angular/common';
+import { PriceTokenSilly } from '../shyft-api.services';
+
+
+
+
 
 @Component({
     selector: 'billeterasol-tokenslist-section',
     imports: [MatTableModule, MatCard, MatButton, DecimalPipe, CommonModule],
     standalone: true,
     styleUrls: ['../../styles.scss'],
-  //   template: `
-  //   <mat-card class=" px-4 py-8 blur-background">
-  //     @if (!allTokens()) {
-  //       <p class="text-center text-white">conect your wallet.</p>
-  //     } @else if (allTokens()?.length === 0) {
-  //       <p class="text-center text-white">no Activity.</p>
-  //     } @else  {
-  //       <div class="my-button-row center">
-  //       <button mat-raised-button color="primary" (click)="onTransfer()">SEND   </button>
-  //       <button mat-raised-button color="primary" (click)="onBuy()">BUY    </button>
-  //       <button mat-raised-button color="primary" (click)="onReceive()">RECEIVE</button>
-  //       </div>
-  //       <div style="border-top: 20px solid transparent;"></div> 
-  //       <table mat-table [dataSource]="allTokens() ?? []" class=" bg-blue-800">
-          
-  //         <ng-container matColumnDef="image">
-  //           <th mat-header-cell *matHeaderCellDef></th>
-  //           <td mat-cell *matCellDef="let element">
-  //             <img class="circular-image" [src]="element.info.image" [width]="50"/>
-  //           </td>
-  //         </ng-container>
-
-  //         <ng-container matColumnDef="name">
-  //           <th mat-header-cell *matHeaderCellDef></th>
-  //           <td mat-cell *matCellDef="let element">{{ element.info.name }}</td>
-  //         </ng-container>
-
-  //         <ng-container matColumnDef="balance">
-  //           <th mat-header-cell *matHeaderCellDef ></th>
-  //           <td mat-cell *matCellDef="let element">{{ element.balance | number }}</td>
-  //         </ng-container>
-
-  //         <ng-container matColumnDef="symbol">
-  //           <th mat-header-cell *matHeaderCellDef></th>
-  //           <td mat-cell *matCellDef="let element">{{ element.info.symbol }}</td>
-  //         </ng-container>
-
-  //         <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-  //         <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
-  //     </table>   
-  //   }  
-      
-  //   </mat-card>
-  // `,
-  template: `
-  <mat-card class="px-4 py-8 blur-background">
+    template: `
+    <mat-card class="px-4 py-8 blur-background">
       @if (!allTokens()) {
           <p class="text-center text-white">Connect your wallet.</p>
       } @else if (allTokens()?.length === 0) {
@@ -84,17 +45,21 @@ import { CommonModule } from '@angular/common';
                         <span class="token-info-debajo text-1xl align-text-bottom">&nbsp;{{ token.balance | number }}&nbsp;<span class="token-info-debajo text-1xl">{{ token.info.symbol }}</span></span>
                         
                     </div>
-                    
+                    <div>
+                    <p class="text-right items-right text-2xl mb-6 text-white">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;$ {{ tokenValueInUSD() | number }}</p>
+                    </div>
                 </div>
                 </div>
             
       }  
-  </mat-card>
-`,
+    </mat-card>
+    `,
 })
 
 
 export class TokensListSectionComponent {
+  
+    
     private readonly _tokensList = inject(TokensList);
     private readonly _walletStore = inject(WalletStore);
     private readonly _publicKey = toSignal(this._walletStore.publicKey$);
@@ -105,7 +70,17 @@ export class TokensListSectionComponent {
     
     );
 
-    displayedColumns: string[] = ['image', 'name', 'balance', 'symbol' ];
+    
+    private readonly _pricetoken = inject(PriceTokenSilly);
+    private readonly _walletStoreSilly = inject(WalletStore);
+    private readonly _publicKeySilly = toSignal(this._walletStoreSilly.publicKey$);
+ 
+    readonly tokenPrice = computedAsync(
+      () => this._pricetoken.getPriceToken(this._publicKeySilly()?.toBase58()),
+      { requireSync: false, initialValue: null},
+    );
+     
+    
 
     onTransfer() {
       this._matDialog.open(TransferModalComponent);
@@ -118,5 +93,17 @@ export class TokensListSectionComponent {
     onReceive(){
       this._matDialog.open(ReceiveModalComponent);
     }
+
+    tokenValueInUSD(): number {
+      const balanceToken = 28;
+      const price = this.tokenPrice()?.SOL?.price;
+        if (balanceToken && price) {
+          return (balanceToken * (109/price));
+        }
+        return 0;
+      }
+
+    
+
     
 }

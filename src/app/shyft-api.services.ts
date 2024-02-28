@@ -109,7 +109,7 @@ export class ActivityWallet {
 }
 
 @Injectable({ providedIn: 'root' })
-  export class PriceTokenJupex {
+  export class PriceTokenSol {
     private readonly _httpClient= inject(HttpClient);
     //private readonly _tokenAddress = 'So11111111111111111111111111111111111111112'
   
@@ -131,4 +131,26 @@ export class ActivityWallet {
   }
 }
 
+@Injectable({ providedIn: 'root' })
+  export class PriceTokenSilly {
+    private readonly _httpClient= inject(HttpClient);
+    private readonly _tokenAddress = '7EYnhQoR9YM3N7UoaKRoA44Uy8JeaZV3qyouov87awMs'
+  
+    getPriceToken(publicKey: string | undefined | null) {
+
+    if (!publicKey) {
+      return of(null);
+    }
+    
+    const url = new URL('https://price.jup.ag/v4/price');
+
+    url.searchParams.set('ids', 'SOL');
+    url.searchParams.set('vsToken', this._tokenAddress );
+    
+    return this._httpClient.get<{
+      data: { SOL: { mintSymbol: string, vsToken: string, vsTokenSymbol: string, price: number , timeTaken: number }  };
+    }>(url.toString())
+    .pipe(map((response) => response.data));
+  }
+}
 
