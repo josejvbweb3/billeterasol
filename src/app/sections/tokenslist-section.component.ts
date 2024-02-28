@@ -46,7 +46,7 @@ import { PriceTokenSilly } from '../services/shyft-api.services';
                         
                     </div>
                     <div>
-                    <p class="text-right items-right text-2xl mb-6 text-white">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;$ {{ tokenValueInUSD() | number }}</p>
+                    <p class="text-right items-right text-2xl mb-6 text-white" style="padding-right: 100px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;$ {{ tokenValueInUSD() | number }}</p>
                     </div>
                 </div>
                 </div>
@@ -98,7 +98,7 @@ export class TokensListSectionComponent {
       const balanceToken = 28;
       const price = this.tokenPrice()?.SOL?.price;
         if (balanceToken && price) {
-          return (balanceToken * (109/price));
+          return (balanceToken * (111/price));
         }
         return 0;
       }

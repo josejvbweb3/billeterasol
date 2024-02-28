@@ -46,9 +46,36 @@ export class ActivityWallet {
     
 
     return this._httpClient.get<{
-      result: { type: string; status: string; timestamp: string; }[]
+      result: { 
+        type: string; 
+        status: string; 
+        timestamp: string; 
+        fee: number;
+        fee_payer: string;
+        signers: string[];
+        signatures: string[];
+        protocol: {
+          address: string;
+          name: string;
+        };
+        actions: {
+          info: {
+            amount: number;
+            receiver: string;
+            sender: string;
+            receiver_associated_account: string;
+            nft_address: string;
+          };
+          source_protocol: string;
+          type: string;
+        }[]; 
+      }[]
     }>(url.toString(), { headers: this._header })
-    .pipe(map((response) => response.result));
+      .pipe(map((response) => response.result));
+      //   result: { type: string; status: string; timestamp: string; fee: string; actions: {info: { receiver: number}}; }[]
+      // }>(url.toString(), { headers: this._header })
+      // .pipe(map((response) => response.result));
+
   }
 
   getEndpoint() {

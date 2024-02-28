@@ -27,15 +27,21 @@ import { DatePipe } from '@angular/common';
             <td mat-cell *matCellDef="let element">{{ element.type }}</td>
           </ng-container>
 
-          <ng-container matColumnDef="status">
-            <th mat-header-cell *matHeaderCellDef>Status</th>
-            <td mat-cell *matCellDef="let element">{{ element.status }}</td>
+          <ng-container matColumnDef="fee">
+            <th mat-header-cell *matHeaderCellDef>Fee</th>
+            <td mat-cell *matCellDef="let element">{{ element.fee }}</td>
           </ng-container>
 
           <ng-container matColumnDef="timestamp">
             <th mat-header-cell *matHeaderCellDef>Time</th>
             <td mat-cell *matCellDef="let element">{{ element.timestamp | date: 'medium'}}</td>
           </ng-container>
+
+          <ng-container matColumnDef="status">
+            <th mat-header-cell *matHeaderCellDef>Status</th>
+            <td mat-cell *matCellDef="let element">{{ element.status }}</td>
+          </ng-container>
+
 
           <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
           <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
@@ -55,6 +61,6 @@ export class ActivitySectionComponent {
     
     );
 
-    displayedColumns: string[] = ['type', 'status', 'timestamp'];
+    displayedColumns: string[] = ['type', 'fee', 'timestamp', 'status'];
 
 }
