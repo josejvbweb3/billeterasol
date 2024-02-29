@@ -4,7 +4,7 @@ import { WalletStore } from '@heavy-duty/wallet-adapter';
 import { computedAsync } from 'ngxtension/computed-async';
 import { SolBalance } from '../services/shyft-api.services';
 import { MatButton } from '@angular/material/button';
-import { PriceTokenSol } from '../services/shyft-api.services';
+import { PriceSol} from '../services/shyft-api.services';
 import { DecimalPipe } from '@angular/common';
 
 
@@ -14,7 +14,7 @@ import { DecimalPipe } from '@angular/common';
     template: `
       <section class="px-4 py-8">
         @if (account1()) {
-      <p class="text-center text-3xl mb-6 text-white">$ {{ calculateValueInUSD() | number }}</p>
+      <p class="text-center text-3xl mb-6 text-white">$ {{ SolBalanceInUSD() | number }}</p>
         <div 
           class=" flex justify-center items-center gap-2 mb-4">
           <img src="https://i.ibb.co/Wtb15V7/solana-sol-seeklogo.png" class="w-12 h-12"/>
@@ -23,17 +23,6 @@ import { DecimalPipe } from '@angular/common';
         </div>
         }  
       <section>
-        
-        <!-- <div class=" flex justify-center items-center">
-          <p class="text-1xl">1 SOL ____ </p>
-          <p class="text-1xl">{{ tokenPrice()?.SOL?.price | number }} $</p>
-        </div> -->
-
-      
-        <!-- <div class=" flex justify-center items-center">
-          <p class="text-1xl">Value in USD: </p>
-          <p class="text-1xl">{{ calculateValueInUSD() | number }} $</p>
-        </div> -->
     `,
     standalone: true
     
@@ -51,19 +40,19 @@ import { DecimalPipe } from '@angular/common';
       { requireSync: false, initialValue: null},
     );
       
-    private readonly _pricetoken = inject(PriceTokenSol);
+    private readonly _pricetoken = inject(PriceSol);
     private readonly _walletStore = inject(WalletStore);
     private readonly _publicKey = toSignal(this._walletStore.publicKey$);
  
-    readonly tokenPrice = computedAsync(
-      () => this._pricetoken.getPriceToken(this._publicKey()?.toBase58()),
+    readonly SolPrice = computedAsync(
+      () => this._pricetoken.getPriceSol(this._publicKey()?.toBase58()),
       { requireSync: false, initialValue: null},
     );
     
     
-    calculateValueInUSD(): number {
+    SolBalanceInUSD(): number {
       const balance = this.account1()?.balance;
-      const priceSol = this.tokenPrice()?.SOL?.price;
+      const priceSol = this.SolPrice()?.SOL?.price;
         if (balance && priceSol) {
           return balance * priceSol;
         }

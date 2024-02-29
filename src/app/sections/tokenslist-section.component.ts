@@ -2,7 +2,7 @@ import { Component, inject } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { WalletStore } from '@heavy-duty/wallet-adapter';
 import { computedAsync } from 'ngxtension/computed-async';
-import { TokensList } from '../services/shyft-api.services';
+import { PriceToken, TokensList, PriceSol } from '../services/shyft-api.services';
 import { MatCard } from '@angular/material/card';
 import { MatTableModule } from '@angular/material/table';
 import { MatDialog } from '@angular/material/dialog';
@@ -12,7 +12,7 @@ import { DecimalPipe } from '@angular/common';
 import { BuyModalComponent } from '../buy-modal.component';
 import { ReceiveModalComponent } from '../receive-modal.component';
 import { CommonModule } from '@angular/common';
-import { PriceTokenSilly } from '../services/shyft-api.services';
+
 
 
 
@@ -59,7 +59,7 @@ import { PriceTokenSilly } from '../services/shyft-api.services';
 
 export class TokensListSectionComponent {
   
-    
+    //importa el listado de tokens
     private readonly _tokensList = inject(TokensList);
     private readonly _walletStore = inject(WalletStore);
     private readonly _publicKey = toSignal(this._walletStore.publicKey$);
@@ -70,8 +70,17 @@ export class TokensListSectionComponent {
     
     );
 
-    
-    private readonly _pricetoken = inject(PriceTokenSilly);
+    //importa el precio de sol a traves de jupiter
+    private readonly _priceSol = inject(PriceSol);
+    private readonly _walletStoreSol = inject(WalletStore);
+    private readonly _publicKeySol = toSignal(this._walletStoreSol.publicKey$);
+ 
+    readonly tokenPriceSol = computedAsync(
+      () => this._priceSol.getPriceSol(this._publicKeySol()?.toBase58()),
+      { requireSync: false, initialValue: null},
+    );
+    //importa precio token
+    private readonly _pricetoken = inject(PriceToken);
     private readonly _walletStoreSilly = inject(WalletStore);
     private readonly _publicKeySilly = toSignal(this._walletStoreSilly.publicKey$);
  
@@ -80,7 +89,20 @@ export class TokensListSectionComponent {
       { requireSync: false, initialValue: null},
     );
      
+    // readonly PriceTokenJupiter = computed(() => {
+    //   const PriceSolNow = this.tokenPriceSol();
+    //   const Pricetoken = this.tokenPrice();
+    // })
     
+    tokenValueInUSD(): number {
+      
+      const balanceToken = 28;
+      const price = this.tokenPrice()?.SOL?.price;
+        if (balanceToken && price) {
+          return (balanceToken * (109/price));
+        }
+        return 0;
+      }
 
     onTransfer() {
       this._matDialog.open(TransferModalComponent);
@@ -94,14 +116,6 @@ export class TokensListSectionComponent {
       this._matDialog.open(ReceiveModalComponent);
     }
 
-    tokenValueInUSD(): number {
-      const balanceToken = 28;
-      const price = this.tokenPrice()?.SOL?.price;
-        if (balanceToken && price) {
-          return (balanceToken * (111/price));
-        }
-        return 0;
-      }
 
     
 
