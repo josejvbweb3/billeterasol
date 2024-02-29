@@ -15,9 +15,6 @@ import { CommonModule } from '@angular/common';
 
 
 
-
-
-
 @Component({
     selector: 'billeterasol-tokenslist-section',
     imports: [MatTableModule, MatCard, MatButton, DecimalPipe, CommonModule],
@@ -46,7 +43,7 @@ import { CommonModule } from '@angular/common';
                         
                     </div>
                     <div>
-                    <p class="text-right items-right text-2xl mb-6 text-white" style="padding-right: 100px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;$ {{ tokenValueInUSD() | number }}</p>
+                    <p class="text-right items-right text-2xl mb-6 text-white" style="padding-right: 100px;">&nbsp;&nbsp;$ {{ tokenValueInUSD() | number }}</p>
                     </div>
                 </div>
                 </div>
@@ -67,7 +64,6 @@ export class TokensListSectionComponent {
 
     readonly allTokens = computedAsync(
         () => this._tokensList.getAllTokens(this._publicKey()?.toBase58()),
-    
     );
 
     //importa el precio de sol a traves de jupiter
@@ -77,30 +73,30 @@ export class TokensListSectionComponent {
  
     readonly tokenPriceSol = computedAsync(
       () => this._priceSol.getPriceSol(this._publicKeySol()?.toBase58()),
-      { requireSync: false, initialValue: null},
+      
     );
+
     //importa precio token
     private readonly _pricetoken = inject(PriceToken);
-    private readonly _walletStoreSilly = inject(WalletStore);
-    private readonly _publicKeySilly = toSignal(this._walletStoreSilly.publicKey$);
+    private readonly _walletStoretoken = inject(WalletStore);
+    private readonly _publicKeyToken= toSignal(this._walletStoretoken.publicKey$);
  
     readonly tokenPrice = computedAsync(
-      () => this._pricetoken.getPriceToken(this._publicKeySilly()?.toBase58()),
-      { requireSync: false, initialValue: null},
+      () => this._pricetoken.getPriceToken(this._publicKeyToken()?.toBase58()),
+      
     );
      
-    // readonly PriceTokenJupiter = computed(() => {
-    //   const PriceSolNow = this.tokenPriceSol();
-    //   const Pricetoken = this.tokenPrice();
-    // })
     
     tokenValueInUSD(): number {
       
-      const balanceToken = 28;
-      const price = this.tokenPrice()?.SOL?.price;
-        if (balanceToken && price) {
-          return (balanceToken * (109/price));
-        }
+      const PriceSol = this.tokenPriceSol()?.SOL?.price;
+      const allTokens = this.allTokens();
+      const balanceToken = allTokens && allTokens.length > 0 ? allTokens[0].balance : undefined;
+      //const PriceToken = this.tokenPrice()?.SOL?.price
+
+        if (balanceToken !== undefined && PriceSol !== undefined && PriceToken !== undefined) {
+          return balanceToken * (PriceSol / PriceSol); //(PriceSol / PriceToken)
+        } 
         return 0;
       }
 

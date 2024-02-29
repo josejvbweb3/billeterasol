@@ -4,11 +4,6 @@ import { RouterModule } from '@angular/router';
 import { HdWalletMultiButtonComponent} from '@heavy-duty/wallet-adapter-material';
 import { ActivityWallet } from './services/shyft-api.services';
 import { ConnectionStore } from '@heavy-duty/wallet-adapter';
-
-
-
-
-
 @Component({
   imports: [RouterModule, HdWalletMultiButtonComponent, MatAnchor ],
   selector: 'billeterasol-root',
@@ -21,7 +16,6 @@ import { ConnectionStore } from '@heavy-duty/wallet-adapter';
       <div class="flex justify-center mb-4">
       <hd-wallet-multi-button></hd-wallet-multi-button>
       </div>
-
       <nav>
         <ul class="flex justify-center items-center gap-4">
           <li>
@@ -33,11 +27,9 @@ import { ConnectionStore } from '@heavy-duty/wallet-adapter';
           <li>
             <a [routerLink]="['activity']" mat-raised-button color="accent">Activity</a>
           </li>
-
         </ul>
       </nav>
     </header>
-
     <main>
       <router-outlet></router-outlet>
     </main>

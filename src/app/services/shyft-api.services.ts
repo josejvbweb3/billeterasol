@@ -1,6 +1,7 @@
 import { HttpClient } from "@angular/common/http";
 import { Injectable, inject } from "@angular/core";
-import { Observable, map, of, tap } from 'rxjs';
+import { map, of, tap, BehaviorSubject, Observable, switchMap, forkJoin } from 'rxjs';
+
 
 // peticion para buscar el balance de sol de la wallet
 @Injectable({ providedIn: 'root' })
@@ -115,7 +116,7 @@ export class NftList {
 @Injectable({ providedIn: 'root' })
   export class PriceSol {
     private readonly _httpClient= inject(HttpClient);
-    //private readonly _tokenAddress = 'So11111111111111111111111111111111111111112'
+    
     
     getPriceSol(publicKey: string | undefined | null) {
       
@@ -139,10 +140,9 @@ export class TokensList {
     private readonly _httpClient= inject(HttpClient);
     private readonly _key = '2Uxl_qOb31_gMXfy'
     private readonly _header= { 'x-api-key': this._key };
-    private  _tokenAddress = '';
+    private _tokenAddressesSubject: BehaviorSubject<string[]> = new BehaviorSubject<string[]>([]);
     
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    getAllTokens(publicKey: string | undefined | null): Observable<any> {
+    getAllTokens(publicKey: string | undefined | null ) {
 
     if (!publicKey) {
       return of(null);
@@ -159,41 +159,50 @@ export class TokensList {
     tap(response => {
       // Almacenar la dirección del token
       if (response.result && response.result.length > 0) {
-        this._tokenAddress = response.result[0].address;
+        const tokenAddresses = response.result.map(token => token.address);
+        console.log("Token addresses:", tokenAddresses);
+        this._tokenAddressesSubject.next(tokenAddresses);
       }
     }),
     map((response) => response.result)
     );
+    } 
+    getTokenAddresses(): Observable<string[]> {
+      return this._tokenAddressesSubject.asObservable();
+    }
   }
-  getTokenAddress(): string {
-    return this._tokenAddress;
-  }
-}
 
-//peticion para buscar el precio del token
+
 @Injectable({ providedIn: 'root' })
 export class PriceToken {
-  private readonly _httpClient= inject(HttpClient);
-    constructor(private tokensList: TokensList) { }
+  private readonly _httpClient = inject(HttpClient);
 
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  getPriceToken(publicKey: string | undefined | null): Observable<any> {
-    const tokenAddress = this.tokensList.getTokenAddress();
-    
-    
-    if (!publicKey || !tokenAddress) {
+  constructor(private tokensList: TokensList) {} 
+
+  getPriceToken(publicKey: string | undefined) {
+    if (!publicKey) {
       return of(null);
     }
-    
-    const url = new URL('https://price.jup.ag/v4/price');
-    
-    url.searchParams.set('ids', 'SOL');
-    url.searchParams.set('vsToken', tokenAddress );
-    
-    return this._httpClient.get<{
-      data: { SOL: { mintSymbol: string, vsToken: string, vsTokenSymbol: string, price: number , timeTaken: number }  };
-    }>(url.toString())
-    .pipe(map((response) => response.data));
+
+    return this.tokensList.getTokenAddresses().pipe(
+      switchMap(tokenAddresses => {
+        if (tokenAddresses.length === 0) {
+          return of(null); 
+        }
+
+        const requests = tokenAddresses.map(address => {
+          const url = new URL('https://price.jup.ag/v4/price');
+          url.searchParams.set('ids', 'SOL');
+          url.searchParams.set('vsToken', address);
+          return this._httpClient.get<{
+            data: { SOL: { mintSymbol: string, vsToken: string, vsTokenSymbol: string, price: number , timeTaken: number }  };
+          }>(url.toString()).pipe(
+            map(response => response.data)
+          );
+        });
+
+        return forkJoin(requests); 
+      })
+    );
   }
 }
-
