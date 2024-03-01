@@ -36,6 +36,7 @@ export interface TransferFormPayload {
                     [(ngModel)]="model.token" 
                     name="token" 
                     required
+                    [disabled]="disabled()"
                     #tokenControl="ngModel"
                 >
                 @for (token of tokens(); track token) {
@@ -69,6 +70,7 @@ export interface TransferFormPayload {
                 placeholder="example: pay electricity bill"
                 [(ngModel)]="model.memo"
                 required
+                [disabled]="disabled()"
                 #memoControl="ngModel"
                 
             />
@@ -95,6 +97,7 @@ export interface TransferFormPayload {
                 placeholder="Amount"
                 [(ngModel)]="model.amount"
                 required
+                [disabled]="disabled()"
                 #amountControl="ngModel"
                 
                 [max]="tokenControl.value?.balance ?? undefined "
@@ -125,6 +128,7 @@ export interface TransferFormPayload {
                 placeholder="public key receiver address"
                 [(ngModel)]="model.receiverAddress"
                 required
+                [disabled]="disabled()"
                 #receiverAddressControl="ngModel"
                 
             />
@@ -168,7 +172,7 @@ export class TransferFormComponent {
     
     readonly tokens = input<{ address: string, balance: number, info: { name: string, symbol: string, image: string} }[]>([]);
     
-      //readonly disabled = input<boolean>(false);
+      readonly disabled = input<boolean>(false);
     
       @Output() readonly sendTransfer = new EventEmitter<TransferFormPayload>();
       @Output() readonly cancelTransfer = new EventEmitter();

@@ -16,7 +16,7 @@ import { toSignal } from "@angular/core/rxjs-interop";
             <h2 class="text-3xl text-center mb-8 bg-blue-800">Transfer tokens</h2>
 
             <billeterasol-transfer-form
-                
+                [disabled]="isRunning()"
                 [tokens]="allTokens() ?? []"
                 (sendTransfer)="onSendTransfer($event)"
                 (cancelTransfer)="onCancelTransfer()"

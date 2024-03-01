@@ -1,13 +1,14 @@
 import { HttpClient } from "@angular/common/http";
 import { Injectable, inject } from "@angular/core";
 import { map, of, tap, BehaviorSubject, Observable, switchMap, forkJoin } from 'rxjs';
+import { config } from '../services/config'
 
 
 // peticion para buscar el balance de sol de la wallet
 @Injectable({ providedIn: 'root' })
 export class SolBalance {
   private readonly _httpClient= inject(HttpClient);
-  private readonly _header= { 'x-api-key': '2Uxl_qOb31_gMXfy' };
+  private readonly _header= { 'x-api-key': config.shyftApiKey };
   getAccount2(publicKey2: string | undefined | null) {
 
     if (!publicKey2) {
@@ -32,7 +33,7 @@ export class SolBalance {
 
 export class ActivityWallet {
   private readonly _httpClient= inject(HttpClient);
-  private readonly _key = '2Uxl_qOb31_gMXfy'
+  private readonly _key = config.shyftApiKey
   private readonly _header= { 'x-api-key': this._key };
   
   getTransactionsHistory(publicKey: string | undefined | null) {
@@ -91,7 +92,7 @@ export class ActivityWallet {
 @Injectable({ providedIn: 'root' })
 export class NftList {
   private readonly _httpClient= inject(HttpClient);
-  private readonly _key = '2Uxl_qOb31_gMXfy'
+  private readonly _key = config.shyftApiKey
   private readonly _header= { 'x-api-key': this._key };
   
   getAllNfts(publicKey: string | undefined | null) {
@@ -138,7 +139,7 @@ export class NftList {
 @Injectable({ providedIn: 'root' })
 export class TokensList {
     private readonly _httpClient= inject(HttpClient);
-    private readonly _key = '2Uxl_qOb31_gMXfy'
+    private readonly _key = config.shyftApiKey
     private readonly _header= { 'x-api-key': this._key };
     private _tokenAddressesSubject: BehaviorSubject<string[]> = new BehaviorSubject<string[]>([]);
     
