@@ -1,1 +1,76 @@
+@import "tailwindcss/base";
+@import "tailwindcss/components";
+@import "tailwindcss/utilities";
+
 /* You can add global styles to this file, and also import other style files */
+
+html,
+body {
+  height: 100%;
+  background-color: black;
+  width: 650px;
+  margin: auto;
+}
+body {
+  margin: 0;
+  font-family: Roboto, 'Helvetica Neue', sans-serif;
+}
+
+.mat-app-background {
+  background: linear-gradient(rgb(5, 5, 5), rgba(48, 2, 253, 0.993)); // Gradiente lineal transparente
+  backdrop-filter: blur(10px); // Aplicación del efecto de desenfoque
+}
+
+.mat-raised-button {
+ background-color: blue;
+ 
+}
+
+.my-button-row button,
+ 
+.my-button-row a {
+  margin-right: 8px;
+  display: justify;
+  width: 100px;
+  align-items: center;
+}
+
+div.center {
+  text-align: center;
+  
+}
+
+.blur-background {
+  background: linear-gradient(rgba(5, 5, 5, 0.5), rgba(49, 6, 241, 0.5)); // Gradiente lineal transparente
+  backdrop-filter: blur(10px); // Aplicación del efecto de desenfoque
+}
+
+.circular-image {
+  border-radius: 50%;
+}
+
+.token-item {
+  display: flex; /* Utilizar flexbox */
+}
+
+.token-info {
+  display: flex; /* Utilizar flexbox */
+  align-items: center; /* Alinear los elementos verticalmente */
+}
+
+.token-name-balance {
+  display: flex; /* Utilizar flexbox */
+  flex-direction: column; /* Alinear elementos verticalmente */
+}
+// .token-info {
+//   display: flex; /* Utilizar flexbox */
+//   align-items: start;
+
+// /* Alinear los elementos verticalmente */
+// }
+.token-info-debajo {
+  
+  align-items: center;
+  display: inline-block;
+  text-underline-position: auto;
+}
